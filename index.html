@@ -1,0 +1,3716 @@
+﻿<!DOCTYPE html>
+
+<html lang="vi">
+<head>
+<meta charset="utf-8"/>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bé Giỏi Toán Lớp 1–2–3</title>
+<style>
+  :root{
+    --bg:#eaffd6;
+    --panel:#c7f9b6;
+    --panel2:#a6f4a0;
+    --border:#2f6f2f;
+    --border2:#1f4d1f;
+    --muted:#14532d;
+    --good:#16a34a;
+    --bad:#dc2626;
+    --warn:#f59e0b;
+    --info:#0284c7;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;}
+
+  body{
+    margin:0;background:var(--bg);
+    font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+    color:#052e16;
+  }
+  .wrap{
+    max-width:min(1200px, 100vw);
+    margin:0 auto;
+    padding:10px;
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+  }
+
+  .header{
+    border:4px solid var(--border);
+    background:var(--panel);
+    padding:10px;
+    text-align:center;
+  }
+  .header .line1{font-weight:900;font-size:14px;letter-spacing:.6px;font-family:"Times New Roman",serif}
+  .header .line2{font-weight:900;font-size:14px;letter-spacing:.6px;font-family:"Times New Roman",serif}
+  .header .line3{
+    font-weight:1000;
+    font-size:38px;
+    margin-top:6px;
+    letter-spacing:1px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:14px;
+  }
+  .header .line3 .titleRed{
+    color:#b80000;
+    text-shadow:1px 1px 0 #ffffff, 0 0 10px rgba(255,204,0,.55);
+    animation: blinkGlow 1.6s ease-in-out infinite;
+  }
+  .header .line3 .star{
+    color:#f4c430;
+    font-size:36px;
+    text-shadow:1px 1px 2px rgba(0,0,0,.55);
+  }
+  @keyframes blinkGlow{
+    0%,100%{ opacity:1; filter:saturate(1); transform:scale(1); }
+    50%{ opacity:.78; filter:saturate(1.18); transform:scale(1.02); }
+  }
+
+  .header .line4{font-weight:1000;font-size:13px;color:#0f3d1f;margin-top:4px}
+  .headerRow{
+    margin-top:8px;
+    display:flex;align-items:center;justify-content:space-between;gap:10px;
+  }
+  .badge{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:6px 10px;border-radius:999px;
+    border:2px solid #2f6f2f;background:#eaffd6;color:#052e16;
+    font-weight:1000;font-size:12px;white-space:nowrap;
+  }
+
+  .controls{
+    margin-top:10px;
+    border:4px solid var(--border);background:var(--panel);
+    padding:10px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;
+  }
+  .controls label{font-weight:1000;color:#052e16}
+  .controls select,.controls button,.controls input{
+    padding:8px 10px;border-radius:10px;border:2px solid #2f6f2f;
+    background:#ffffff;color:#000;font-weight:1000;
+  }
+  .controls button{cursor:pointer}
+  .btn-primary{background:var(--good)!important;color:#052e16!important;border-color:#16a34a!important}
+  .btn-info{background:var(--info)!important;color:#071a3a!important;border-color:#1d4ed8!important}
+  .btn-warn{background:var(--warn)!important;color:#2b1b00!important;border-color:#d97706!important}
+  .btn-bad{background:var(--bad)!important;color:#2b0000!important;border-color:#b91c1c!important}
+  .btn-ghost{background:#eaffd6!important;color:#052e16!important}
+  .break{flex-basis:100%;height:0}
+
+  .main{
+    display:flex;
+    gap:10px;
+    margin-top:10px;
+    flex:1;
+    min-height:0; /* quan trọng để các cột cuộn bên trong */
+  }
+  .left,.right{
+    width:18%;
+    border:4px solid var(--border);
+    padding:8px;overflow:auto;background:var(--panel);
+  }
+  .center{
+    width:64%;
+    border:4px solid var(--border);
+    background:#fff;color:#111827;
+    position:relative;overflow:hidden;
+  }
+
+  .panelTitle{
+    display:flex;align-items:center;justify-content:space-between;gap:8px;
+    padding:6px 0;border-bottom:2px solid #1f2937;margin-bottom:8px;
+  }
+  .panelTitle b{color:#052e16}
+
+  .students{display:flex;flex-wrap:wrap}
+  .student{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:8px 10px;margin:5px;
+    border-radius:14px;
+    color:#000;
+    border:2px solid #0b1220;
+    cursor:pointer;
+    font-size:13px;font-weight:1000;
+    user-select:none;
+    box-shadow:0 10px 20px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.9);
+    transform:translateY(0) rotate(0deg);
+    transition:transform .14s ease, box-shadow .14s ease, filter .14s ease;
+    position:relative;
+    overflow:hidden;
+  }
+  .student:before{
+    content:"";
+    position:absolute; inset:-30px;
+    background:radial-gradient(circle at 20% 20%, rgba(255,255,255,.85), rgba(255,255,255,0) 55%);
+    transform:rotate(12deg);
+    opacity:.65;pointer-events:none;
+  }
+  .student:hover{transform:translateY(-2px) rotate(-0.6deg);filter:saturate(1.12)}
+  .student:active{transform:translateY(1px) rotate(0deg) scale(.99)}
+  .student .icon{font-size:16px}
+  .student.active{
+    outline:4px solid var(--bad);
+    animation:pulse 0.6s ease-in-out infinite alternate;
+  }
+  @keyframes pulse{from{transform:translateY(-1px) scale(1)}to{transform:translateY(-2px) scale(1.02)}}
+
+  .centerTop{
+    background:var(--panel2);color:#052e16;
+    border-bottom:4px solid var(--border2);
+    padding:10px;
+  }
+  .centerTop .status{margin-top:6px;font-size:13px;font-weight:1000;color:#052e16;text-align:center}
+
+  .timer{
+    font-size:28px;color:#dc2626;font-weight:1000;margin-top:8px;text-align:center;
+  }
+  .question{
+    font-size:32px;
+    border:5px solid var(--border2);
+    padding:14px;
+    margin:12px 10px 6px 10px;
+    border-radius:16px;
+    background:linear-gradient(180deg,#ffffff,#f1f5f9);
+     position:relative;
+     text-align:center;
+    box-shadow:0 10px 22px rgba(0,0,0,.18);
+  }
+  .qSub{
+    margin-top:8px;
+    font-size:14px;
+    font-weight:1000;
+    color:#0f3d1f;
+  }
+  .qCount{
+    position:absolute;
+    top:8px;
+    left:10px;
+    display:inline-block;
+    padding:4px 8px;
+    border-radius:999px;
+    border:2px solid var(--border2);
+    background:#eaffd6;
+    color:#052e16;
+    font-weight:1000;
+    font-size:14px;
+    line-height:1;
+  }
+  .qText{
+    display:block;
+    margin-top:10px;
+  }
+
+
+  .answers{display:grid;grid-template-columns:repeat(2, minmax(0,1fr));gap:12px;padding:10px;justify-items:stretch;align-items:stretch}
+@media (max-width:700px){.answers{grid-template-columns:1fr;}}
+  .ansBtn{
+    width:100%;
+    min-width:0;
+    max-width:none;
+    padding:14px 10px;
+    border-radius:16px;
+    border:4px solid #0b2a12;
+    background:linear-gradient(180deg, rgba(120,245,200,.92), rgba(190,255,220,.92));
+    color:#0b2a12;
+    font-weight:900;
+    font-size:22px;
+    text-align:center;
+    cursor:pointer;
+    position:relative;
+    box-shadow:0 10px 22px rgba(0,0,0,.18);
+    transition:transform .08s ease, filter .12s ease, box-shadow .12s ease;
+}
+.ansBtn:active{transform:scale(.99)}
+  .ansBtn:before{
+    content:"";
+    position:absolute; inset:-40px;
+    background:radial-gradient(circle at 10% 10%, rgba(255,255,255,.85), rgba(255,255,255,0) 60%);
+    opacity:.7;pointer-events:none;
+  }
+  .ansBtn:hover{transform:translateY(-2px);filter:saturate(1.1);box-shadow:0 18px 30px rgba(0,0,0,.28)}
+  .ansBtn:active{transform:translateY(1px) scale(.99)}
+  .ansBtn.correct{outline:6px solid #16a34a}
+  .ansBtn.wrong{outline:6px solid #dc2626}
+  .ansBtn.disabled{pointer-events:none;opacity:.96}
+
+  .rankItem{
+    display:flex;justify-content:space-between;gap:8px;align-items:center;
+    padding:8px;border-radius:12px;margin:6px 0;
+    background:#eaffd6;border:2px solid #2f6f2f;color:#052e16;
+    font-weight:1000;font-size:12px;
+  }
+  .rankItem .name{font-size:13px}
+  .rankItem .score{background:var(--good);color:#052e16;padding:4px 8px;border-radius:999px}
+
+  .footer{
+    margin-top:10px;
+    border:4px solid var(--border);background:var(--panel);padding:10px;
+    color:#052e16;font-size:12px;line-height:1.5;
+  }
+
+  #statsPanel{
+    display:none;
+    position:absolute;left:10px;right:10px;bottom:10px;top:180px;
+    background:#fff;color:#111827;border-radius:14px;border:4px solid var(--border2);
+    padding:10px;overflow:hidden;
+  }
+  #statsPanel table{border-collapse:collapse;width:100%;font-size:12px}
+  #statsPanel th,#statsPanel td{border:1px solid #cbd5e1;padding:6px;white-space:nowrap}
+  #statsPanel th{background:#f1f5f9}
+
+  .modalBack{
+    position:fixed;inset:0;background:rgba(0,0,0,.6);
+    display:none;align-items:center;justify-content:center;z-index:50;
+    padding:14px;
+  }
+  .modal{
+    width:min(900px,100%);
+    background:var(--panel2);color:#052e16;border:4px solid var(--border);border-radius:16px;
+    padding:12px;
+  }
+  .modal h3{margin:6px 0 10px 0}
+  .modal .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  .modal input,.modal textarea{
+    width:100%;padding:10px;border-radius:12px;border:2px solid #2f6f2f;
+    background:#ffffff;color:#000;font-weight:1000;
+  }
+  .modal textarea{min-height:220px}
+  .modal .btnRow{display:flex;gap:10px;justify-content:flex-end;margin-top:10px;flex-wrap:wrap}
+  .smallHint{color:#0f3d1f;font-size:12px;margin-top:6px;font-weight:900}
+  hr{border:none;height:2px;background:#1f2937;margin:10px 0}
+
+
+/* === Title blink === */
+.header .line3{
+  font-weight:1000;
+  font-size:34px;
+  margin-top:6px;
+  color:#b80000;
+  letter-spacing:2px;
+  text-shadow: 0 0 6px #ffcc00, 0 0 12px #ff9900;
+  animation: blinkGlow 1.6s infinite alternate;
+}
+@keyframes blinkGlow{
+  0%{ opacity:0.92; transform:scale(1); }
+  50%{ opacity:1; transform:scale(1.03); }
+  100%{ opacity:0.92; transform:scale(1); }
+}
+#cloudLayer{
+  position:fixed; inset:-60px;
+  pointer-events:none;
+  z-index:-2;
+  opacity:.55;
+  background:
+    radial-gradient(circle at 10% 40%, rgba(255,255,255,.75), rgba(255,255,255,0) 55%),
+    radial-gradient(circle at 40% 30%, rgba(255,255,255,.65), rgba(255,255,255,0) 60%),
+    radial-gradient(circle at 70% 45%, rgba(255,255,255,.7), rgba(255,255,255,0) 58%),
+    radial-gradient(circle at 90% 35%, rgba(255,255,255,.6), rgba(255,255,255,0) 60%);
+  animation: cloudsMove 38s linear infinite;
+}
+@keyframes cloudsMove{
+  0%{ transform:translateX(-6%); }
+  100%{ transform:translateX(6%); }
+}
+/* tăng tương phản khung nội dung để nổi trên nền */
+.wrap{ position:relative; }
+.header,.controls,.left,.center,.right,.footer{ backdrop-filter: none; -webkit-backdrop-filter:none; }
+
+
+/* ===== CONFETTI (v11) ===== */
+#confettiCanvas{
+  position:fixed; inset:0;
+  pointer-events:none;
+  z-index:9999;
+  display:none;
+}
+#winToast{
+  position:fixed;
+  left:50%; top:18%;
+  transform:translateX(-50%);
+  background:rgba(255,255,255,.92);
+  border:4px solid #166534;
+  border-radius:16px;
+  padding:14px 18px;
+  font-weight:1000;
+  color:#052e16;
+  box-shadow:0 18px 40px rgba(0,0,0,.25);
+  z-index:10000;
+  display:none;
+  text-align:center;
+  min-width:min(520px,92vw);
+}
+#winToast .big{font-size:34px; color:#b91c1c; text-shadow:0 2px 0 #fff, 0 0 10px rgba(255,215,0,.35);}
+#winToast .sub{margin-top:8px; font-size:18px; color:#14532d; font-weight:900;}
+
+
+/* ===== OVERRIDES: Thu gọn khung trên + tăng cỡ tên học sinh ===== */
+.header{ padding:6px 10px !important; }
+.header .line1{ font-size:14px !important; }
+.header .line2{ font-size:15px !important; margin-top:2px !important; }
+.header .line3{ font-size:30px !important; margin-top:4px !important; }
+.header .line4{ font-size:13px !important; margin-top:2px !important; }
+
+.controls{ margin-top:6px !important; padding:6px !important; border-width:3px !important; }
+.controls label{ font-size:14px !important; }
+.controls select,.controls button,.controls input{ padding:6px 8px !important; font-size:14px !important; }
+.actions{ margin-top:6px !important; }
+.actions button{ padding:8px 10px !important; font-size:14px !important; }
+
+.left,.right{ width:20% !important; border-width:3px !important; }
+.center{ width:60% !important; border-width:3px !important; }
+
+.students{ display:flex !important; flex-direction:column !important; gap:8px !important; }
+.student{
+  width:100% !important;
+  box-sizing:border-box !important;
+  justify-content:flex-start !important;
+  font-size:16px !important;
+  padding:10px 12px !important;
+  margin:0 !important;
+  line-height:1.2 !important;
+  white-space:normal !important;
+  word-break:break-word !important;
+}
+
+
+/* ===== COMPACT MAIN PANEL (giảm kích thước khung chính) ===== */
+.centerTop{padding:6px !important;}
+.timer{font-size:22px !important; margin-top:6px !important;}
+.question{
+  font-size:22px !important;
+  padding:10px !important;
+  margin:8px 10px 4px 10px !important;
+  border-width:4px !important;
+  border-radius:14px !important;
+}
+.answers{gap:8px !important; padding:8px !important;}
+.ansBtn{
+  min-width:200px !important;
+  padding:10px 10px !important;
+  font-size:18px !important;
+  border-width:3px !important;
+  border-radius:16px !important;
+  box-shadow:0 10px 18px rgba(0,0,0,0.20) !important;
+}
+@media (max-width: 980px){
+  .ansBtn{min-width:160px !important; font-size:16px !important;}
+  .question{font-size:22px !important;}
+}
+
+.ansGrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;}
+
+/* ===== Nút điều hướng (Quay lại / Tiếp theo / Nộp bài) ===== */
+.navRow{
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  margin-top:14px;
+}
+.navBtn{
+  padding:10px 14px;
+  border-radius:12px;
+  border:3px solid #0b2a12;
+  background:#fff;
+  font-weight:900;
+  cursor:pointer;
+  box-shadow:0 8px 16px rgba(0,0,0,.15);
+}
+.navBtn.primary{background:#16a34a;color:#fff;border-color:#0b2a12;}
+.navBtn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none;}
+
+
+/* ===== PATCH v12: Bỏ hoàn toàn hiệu ứng "mờ/che" ở câu hỏi & đáp án ===== */
+.header,.controls,.left,.center,.right,.footer{
+  backdrop-filter:none !important;
+  -webkit-backdrop-filter:none !important;
+  filter:none !important;
+}
+/* Nút đáp án dùng màu OPAQUE (không trong suốt) để không thấy nền phía sau */
+.ansBtn{
+  background: linear-gradient(180deg, #78f5c8, #beffdc) !important;
+}
+/* Tắt lớp phủ sáng (pseudo overlay) trên nút đáp án nếu gây cảm giác mờ */
+.ansBtn:before{ opacity:0 !important; }
+
+
+  /* ===== Group headers for stats/ranking ===== */
+  .stLevelRow td{
+    background:#d1fae5;
+    font-weight:1000;
+    color:#052e16;
+    text-align:left;
+  }
+  .rankLevelTitle{
+    margin:10px 0 6px 0;
+    padding:6px 10px;
+    border-radius:12px;
+    border:2px solid #2f6f2f;
+    background:#eaffd6;
+    font-weight:1000;
+    color:#14532d;
+  }
+
+</style>
+</head>
+<body>
+
+<div id="bgSky" aria-hidden="true"></div>
+<div id="cloudLayer" aria-hidden="true"></div>
+
+<div class="wrap">
+<div class="header"><div class="line1">UBND XÃ SÍNH PHÌNH</div><div class="line2">TRƯỜNG PTDTBT TH TRUNG THU</div><div class="line3">★★★ BÉ GIỎI TOÁN 1 2 3 ★★★</div><div class="line4">!!! Học mà vui - Vui mà học !!!</div><div class="headerRow"><div class="badge" id="todayBadge">📅</div><div class="badge" id="gameBadge">🎯 Sẵn sàng</div></div></div>
+<div class="controls">
+<label>Khối:</label>
+<select id="grade">
+<option value="1">Lớp 1</option>
+<option value="2">Lớp 2</option>
+<option value="3">Lớp 3</option>
+</select>
+<label>Lớp:</label>
+<select id="classSelect"></select>
+<label>Kỳ:</label>
+<select id="term">
+<option value="1">Kỳ 1</option>
+<option value="2">Kỳ 2</option>
+</select>
+<label>Mức độ:</label>
+<select id="level">
+<option value="easy">Dễ</option>
+<option value="medium">Vừa</option>
+<option value="hard">Khó</option>
+</select>
+<label>Số câu:</label>
+<select id="modeCount">
+<option value="10">10 câu</option>
+<option selected="" value="30">30 câu</option>
+</select>
+<button class="btn-ghost" id="btnSound">🔊 Âm thanh: BẬT</button>
+<button class="btn-primary" id="btnStart">Bắt đầu</button>
+<span class="break"></span>
+<button class="btn-ghost" id="btnWord">Xuất Word A4 (3 phần)</button>
+<button class="btn-info" id="btnStats">Thống kê</button>
+<button class="btn-warn" id="btnAdmin">Quản trị lớp 🔒</button>
+<button class="btn-bad" id="btnResetAll">Reset (xếp hạng + thống kê)</button>
+</div>
+<div class="main">
+<div class="left">
+<div class="panelTitle">
+<b>Danh sách học sinh</b>
+<span class="badge" id="classBadge">—</span>
+</div>
+<div class="students" id="students"></div>
+</div>
+<div class="center">
+<div class="centerTop">
+<div class="status" id="centerStatus">Chọn học sinh để bắt đầu</div>
+</div>
+<div class="timer" id="timer">⏱</div>
+<div class="question" id="question">
+  <div class="qCount" id="qCount"></div>
+  <div class="qText" id="qText">Chọn học sinh → Bắt đầu</div>
+  <div class="qSub" id="qSub"></div>
+</div>
+<div class="answers" id="answers"></div>
+<div id="statsPanel">
+<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:6px 0;">
+<b>📊 THỐNG KÊ</b>
+<button class="btn-ghost" id="btnCloseStats">Đóng</button>
+<button class="btn-ghost" id="btnExportStats">Xuất thống kê (XLS)</button>
+<button class="btn-ghost" id="btnSheetUrl">Cài Sheet URL</button>
+<button class="btn-ghost" id="btnSheetPull">Tải từ Sheet</button>
+<button class="btn-ghost" id="btnAutoSync">🔁 Auto Sync: TẮT</button>
+<span id="stSummary" style="margin-left:auto;font-weight:1000;"></span>
+</div>
+<div style="overflow:auto; height:calc(100% - 46px); border:2px solid #111827; border-radius:12px;">
+<table>
+<thead>
+<tr>
+<th>STT</th>
+<th>Học sinh</th>
+<th>Lớp</th>
+<th>Khối</th>
+<th>Kỳ</th>
+<th>Mức</th>
+<th>Số lần</th>
+<th>Điểm cao nhất</th>
+<th>Điểm TB</th>
+<th>Lần gần nhất</th>
+</tr>
+</thead>
+<tbody id="stBody"></tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="right">
+<div class="panelTitle">
+<b>Bảng xếp hạng</b>
+<span class="badge" id="rankBadge">—</span>
+</div>
+<div id="ranking"></div>
+</div>
+</div>
+<div class="footer">
+    Nhóm tác giả: Thầy Phạm Việt Hùng – Nhóm trưởng |
+    Cô Phạm Thùy Dương – Nhóm Phó |
+    Cô Nguyễn Thị Nguyệt – Thành viên<br/>
+    Số ĐT/ZL:0857420333 - MR. Phạm Hùng - Trường PTDTBT TH Trung Thu<br/>
+  </div>
+</div>
+<div class="modalBack" id="passBack">
+<div class="modal" style="max-width:520px">
+<h3>🔒 Nhập mật khẩu quản trị</h3>
+<input id="passInput" placeholder="Mật khẩu..." type="password"/>
+<div class="btnRow">
+<button class="btn-ghost" id="btnPassCancel">Hủy</button>
+<button class="btn-primary" id="btnPassOk">OK</button>
+</div>
+</div>
+</div>
+<div class="modalBack" id="adminBack">
+<div class="modal">
+<h3>👩‍🏫 Quản trị lớp</h3>
+<div class="row">
+<div class="badge">Khối: <b id="mGrade">—</b></div>
+<div class="badge">Lớp: <b id="mClass">—</b></div>
+</div>
+<div style="margin-top:10px;">
+<div style="font-weight:1000;margin-bottom:6px;">Danh sách học sinh (mỗi dòng 1 em) — có thể dán Excel/CSV</div>
+<textarea id="listArea"></textarea>
+<div class="smallHint">Tip: Dán Excel (TSV) được. Hệ thống lấy <b>cột đầu tiên</b> làm tên.</div>
+<div class="row" style="margin-top:8px;">
+<button class="btn-ghost" id="btnSort">Sắp xếp A→Z</button>
+<button class="btn-ghost" id="btnClean">Xóa trùng/để trống</button>
+<button class="btn-ghost" id="btnImport">Import (chuẩn hoá)</button>
+<button class="btn-ghost" id="btnExport">Export CSV</button>
+<button class="btn-ghost" id="btnRestore">Khôi phục mặc định lớp này</button>
+</div>
+</div>
+<hr/>
+<div>
+<div style="font-weight:1000;margin-bottom:6px;">Thêm/Xóa lớp</div>
+<div class="row">
+<input id="newClass" placeholder="Ví dụ: 2A5" style="max-width:240px"/>
+<button class="btn-info" id="btnAddClass">Thêm lớp</button>
+<button class="btn-bad" id="btnDelClass">Xóa lớp đang chọn</button>
+</div>
+<div class="smallHint">• Thêm lớp lưu trên máy (localStorage). • Xóa lớp sẽ xóa cả xếp hạng lớp đó.</div>
+</div>
+<div class="btnRow">
+<button class="btn-ghost" id="btnAdminClose">Đóng</button>
+<button class="btn-primary" id="btnAdminSave">Lưu danh sách</button>
+</div>
+</div>
+</div>
+<script>
+(function(){
+  "use strict";
+
+  const $ = (id)=>document.getElementById(id);
+  const esc = (s)=>String(s??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/\"/g,"&quot;").replace(/'/g,"&#039;");
+  const randInt = (min,max)=>Math.floor(Math.random()*(max-min+1))+min;
+  const shuffle = (arr)=>{const a=arr.slice();for(let i=a.length-1;i>0;i--){const j=randInt(0,i);[a[i],a[j]]=[a[j],a[i]]}return a;};
+
+  const TILE = [
+    "linear-gradient(135deg,#bbf7d0,#86efac)",
+    "linear-gradient(135deg,#a7f3d0,#6ee7b7)",
+    "linear-gradient(135deg,#c7f9b6,#a6f4a0)",
+    "linear-gradient(135deg,#eaffd6,#c7f9b6)",
+    "linear-gradient(135deg,#d9f99d,#bbf7d0)",
+    "linear-gradient(135deg,#99f6e4,#a7f3d0)",
+    "linear-gradient(135deg,#86efac,#34d399)",
+    "linear-gradient(135deg,#bef264,#86efac)"
+  ];
+  const ICONS = ["🎈","⭐","🍀","🎯","🧠","🏆","🌈","🚀"];
+
+  (function(){
+    const d=new Date();
+    $("todayBadge").textContent="📅 "+d.toLocaleDateString("vi-VN",{weekday:"long",year:"numeric",month:"long",day:"numeric"});
+  })();
+
+  let audioEnabled=true;
+  let audioCtx=null;
+  function ensureAudio(){
+    if(!audioEnabled) return;
+    if(!audioCtx){
+      try{ audioCtx=new (window.AudioContext||window.webkitAudioContext)(); }catch(e){ audioCtx=null; }
+    }
+  }
+  function beep(freq=440, dur=0.06){
+    if(!audioEnabled) return;
+    ensureAudio(); if(!audioCtx) return;
+    const o=audioCtx.createOscillator();
+    const g=audioCtx.createGain();
+    o.frequency.value=freq;
+    g.gain.value=0.04;
+    o.connect(g); g.connect(audioCtx.destination);
+    o.start();
+    setTimeout(()=>{ try{o.stop();}catch(e){} }, dur*1000);
+  }
+  $("btnSound").addEventListener("click", ()=>{
+    audioEnabled=!audioEnabled;
+    $("btnSound").textContent = audioEnabled ? "🔊 Âm thanh: BẬT" : "🔇 Âm thanh: TẮT";
+  });
+
+  const DEFAULT_SURNAME = "Giàng";
+  function fullNameFromList(name){
+    name = String(name||"").trim();
+    if(!name) return "";
+    if(/\s/.test(name)) return name;
+    return DEFAULT_SURNAME + " " + name;
+  }
+
+  const STUDENTS_DEFAULT = {
+    "1":{"1A1":["Anh","Bình","Chiến","Chung","Chư","Cu","Cương","Cường","Dê","Dùa","Hạnh","Hiếu","Hoàng","Hương","Khánh","Linh","Mung","Nàng","Phong","Phượng","Thanh","Thơm","Vinh"],
+         "1A2":["Che","Chính","Cộng","Dè","Duyên","Đông","Hạnh","Hoài","Ky","Lồng","Lương","Mai","Minh","Mỷ","Nam","Năng","Nù","Phình","Giàng Phong","Lỳ Phong","Tâm","Thư","Xe"],
+         "1A3":["Bảy","Chung","Duyên","Hoa","Khải","Mai","Măng","Cứ Phương","Lỳ Phương","Minh Phương","Vừ Phương","Quân","Sơn","Tháng","Tiến","A Tú","Việt Tú","Tuấn","Ương"],
+         "1A4":["An","Cảnh","Cường","Dê","Gầu","Hoa","Hoàn","Lờ","Ngọc","Phong","Phương","Sinh","Trắng","Tùng","Yến"]},
+    "2":{"2A1":["Anh","Bách","Chi","Chìa","Dũng","Hà","Hồ","Huy","Hương","Kim","Lan","Liêm","Bảo Long","Nhập Long","A Long","May","Ngọc","Phượng","Sinh","Sơn","Su","Sùng Sua","Vừ Sua","Tâm","Thào","Tiến","Tinh","Tú","Vĩ"],
+         "2A2":["Giàng Chu","Vàng Chu","Cường","Dè","Dinh","Dợ","Duyệt","Đạt","E","Hà","Lan","Lỉnh","Ly","May","Minh","Oanh","Phượng","Sinh","Sùng","Tâm","Thái","Thành","Trường","Cứ Tuấn","Thào Tuấn","Tuyến","Sùng Xì","Thào Xì"],
+         "2A3":["Bình","Dính","Đề","Gống","Học","Khày","Liên","Minh","Mua","Quân","Quyền","Sé","Sênh","Sung","Trừ","Viên","Xia"],
+         "2A4":["Anh","Chi","Chứ","Dê","Dương","Giàng","Giàng Hoa","Hờ Hoa","Hoàn","Khoe","Quý","Sung","Tiến","Tú","Xè"]},
+    "3":{"3A1":["Bảo","Bi","Chia","Cở","Gầu","Giang","Hoa","Huyền","Lỳ Le","Sùng Le","Liên","Nam","Pàng","Phía","Phong","Cứ Phương","Sùng Phương","Quân","Sanh","Sua","Thúy","Tiến","Trường","Tươi","Vinh"],
+         "3A2":["Cái","Chinh","Của","Cường","Diệp","Dinh","Dợ","Dương","Đăng","Định","Đơ","Gầu","Hoa","Long","Nồ","Nu","Phua","Phương","Quân","Sú","Thắng","Trường","Việt","Xe"],
+         "3A3":["Ánh","Công","Cường","Ia","Khánh","Le","Linh","Mùa","Nguyên","Nhi","Oanh","Pài","Thế Phong","A Phong","Phua","Phưởng","Sơ","Trường","Tường","Vân","Vấn","Vinh","Vươn"],
+         "3A4":["Chi","Chí","Chin","Chua","Dũng","A Hoa","Thị Hoa","Hùng","Là","Linh","Long","Lỳ","Mong","Nghĩa","Phìa","Cứ Sơn","Thào Sơn","Thảo","Tiến","Trương","Hờ Viên","Trần Viên","Vy"]}
+  };
+  const deepClone = (x)=>JSON.parse(JSON.stringify(x));
+
+  const KEY_CUSTOM_CLASSES = "CLASSES_CUSTOM";
+  const KEY_OVERRIDES = "STUDENTS_OVERRIDES";
+  const KEY_ATTEMPTS = "ATTEMPTS";
+  const ADMIN_PASSWORD = "Tunglam6";
+  // ===== Google Sheet "server" (Apps Script Web App) =====
+  // 1) Dán URL Web App (Deploy -> Web app) vào biến dưới hoặc nhập qua nút "Cài Sheet URL"
+  let SHEET_WEBAPP_URL = localStorage.getItem("SHEET_WEBAPP_URL") || "";
+
+  const KEY_PENDING_SHEET = "SHEET_PENDING_QUEUE";
+  const KEY_AUTO_SYNC = "AUTO_SYNC_ENABLED";
+  const KEY_AUTO_SYNC_MS = "AUTO_SYNC_INTERVAL_MS";
+
+  function loadPendingQueue(){
+    try{ return JSON.parse(localStorage.getItem(KEY_PENDING_SHEET)||"[]"); }catch(e){ return []; }
+  }
+  function savePendingQueue(q){
+    localStorage.setItem(KEY_PENDING_SHEET, JSON.stringify(Array.isArray(q)?q:[]));
+  }
+  function attemptKey(a){
+    return `${a.student||""}|${a.className||""}|${a.term||""}|${a.time||""}|${a.score||""}|${a.total||""}|${a.durationSec||""}`;
+  }
+  function enqueuePending(a){
+    const q = loadPendingQueue();
+    const k = attemptKey(a);
+    if(!q.some(x=>attemptKey(x)===k)){
+      q.push(a);
+      savePendingQueue(q);
+    }
+  }
+  function setSheetUrl(){
+    const cur = SHEET_WEBAPP_URL || "";
+    const url = prompt("Dán URL Google Apps Script Web App (kết thúc bằng /exec):", cur);
+    if(url===null) return;
+    SHEET_WEBAPP_URL = String(url||"").trim();
+    localStorage.setItem("SHEET_WEBAPP_URL", SHEET_WEBAPP_URL);
+    alert(SHEET_WEBAPP_URL ? "✅ Đã lưu Sheet URL" : "✅ Đã xoá Sheet URL");
+    updateAutoSyncBtn();
+    if(autoSyncEnabled()) startAutoSync();
+  }
+  
+  async function sheetPostAttempt(attempt, silent=false){
+    if(!SHEET_WEBAPP_URL) return false;
+
+    // nếu đang offline thì đưa vào hàng đợi
+    if(typeof navigator!=="undefined" && navigator.onLine===false){
+      enqueuePending(attempt);
+      return false;
+    }
+
+    try{
+      await fetch(SHEET_WEBAPP_URL, {
+        method:"POST",
+        mode:"no-cors",
+        headers:{ "Content-Type":"text/plain;charset=utf-8" },
+        body: JSON.stringify({ action:"append", data: attempt })
+      });
+      return true;
+    }catch(e){
+      enqueuePending(attempt);
+      if(!silent) console.warn("sheetPostAttempt failed:", e);
+      return false;
+    }
+  }
+
+  async function flushPendingToSheet(){
+    if(!SHEET_WEBAPP_URL) return {sent:0, left:0};
+    let q = loadPendingQueue();
+    if(!Array.isArray(q) || q.length===0) return {sent:0, left:0};
+
+    let sent=0;
+    const remain=[];
+    for(const a of q){
+      const ok = await sheetPostAttempt(a, true);
+      if(ok) sent++;
+      else remain.push(a);
+    }
+    savePendingQueue(remain);
+    return {sent, left: remain.length};
+  }
+
+  async function sheetPullAndMerge(silent=false){
+    if(!SHEET_WEBAPP_URL){ if(!silent) alert("⚠ Chưa cài Sheet URL"); return false; }
+    const c = String(el.classSelect.value||"");
+    const ky = String(el.term.value||"");
+
+    // ✅ JSONP để không bị CORS khi đọc dữ liệu từ Apps Script
+    const jsonp = (url)=>new Promise((resolve, reject)=>{
+      const cb = "__gs_cb_" + Math.random().toString(36).slice(2);
+      window[cb] = (payload)=>{
+        try{ resolve(payload); } finally {
+          try{ delete window[cb]; }catch(e){}
+        }
+      };
+      const s=document.createElement("script");
+      s.src = url + (url.includes("?") ? "&" : "?") + "callback=" + encodeURIComponent(cb);
+      s.onload = ()=>{ setTimeout(()=>{ if(window[cb]){ try{ delete window[cb]; }catch(e){} } }, 1000); };
+      s.onerror = ()=>{ try{ delete window[cb]; }catch(e){}; reject(new Error("jsonp-error")); };
+      document.body.appendChild(s);
+      // dọn script sau 10s
+      setTimeout(()=>{ try{ document.body.removeChild(s);}catch(e){} }, 10000);
+    });
+
+    try{
+      const url = SHEET_WEBAPP_URL + "?action=get&className=" + encodeURIComponent(c) + "&term=" + encodeURIComponent(ky);
+      const payload = await jsonp(url);
+      const incoming = Array.isArray(payload && payload.data) ? payload.data : [];
+
+      let local=[];
+      try{ local=JSON.parse(localStorage.getItem(KEY_ATTEMPTS)||"[]"); }catch(e){ local=[]; }
+      const seen = new Set(local.map(x=>`${x.student}|${x.className}|${x.term}|${x.time}|${x.score}|${x.total}|${x.durationSec||""}`));
+
+      let added=0;
+      for(const a of incoming){
+        const k=`${a.student}|${a.className}|${a.term}|${a.time}|${a.score}|${a.total}|${a.durationSec||""}`;
+        if(!seen.has(k)){
+          local.push(a);
+          seen.add(k);
+          added++;
+        }
+      }
+      localStorage.setItem(KEY_ATTEMPTS, JSON.stringify(local));
+      renderStats();
+      renderRanking();
+      if(!silent) alert("✅ Đã tải & gộp từ Google Sheet. Thêm mới: " + added);
+      return true;
+    }catch(e){
+      if(!silent) alert("⚠ Không tải được từ Google Sheet. Kiểm tra URL Web App và quyền truy cập.");
+      return false;
+    }
+  }
+  // ===== Auto Sync 2 chiều (đẩy hàng đợi + kéo từ Sheet định kỳ) =====
+  let autoSyncTimer = null;
+
+  function autoSyncEnabled(){
+    return localStorage.getItem(KEY_AUTO_SYNC) === "1";
+  }
+  function autoSyncIntervalMs(){
+    const v = Number(localStorage.getItem(KEY_AUTO_SYNC_MS) || 30000);
+    return (isFinite(v) && v>=5000) ? v : 30000;
+  }
+  function setAutoSyncEnabled(on){
+    localStorage.setItem(KEY_AUTO_SYNC, on ? "1" : "0");
+    updateAutoSyncBtn();
+    if(on) startAutoSync(); else stopAutoSync();
+  }
+  function updateAutoSyncBtn(){
+    const b = $("btnAutoSync");
+    if(!b) return;
+    const on = autoSyncEnabled();
+    b.textContent = on ? "🔁 Auto Sync: BẬT" : "🔁 Auto Sync: TẮT";
+    b.classList.toggle("btn-primary", on);
+  }
+  async function autoSyncOnce(){
+    if(!SHEET_WEBAPP_URL) return;
+    // 1) đẩy các bản ghi đang chờ lên Sheet
+    await flushPendingToSheet();
+    // 2) kéo dữ liệu từ Sheet về & gộp (silent)
+    await sheetPullAndMerge(true);
+  }
+  function startAutoSync(){
+    stopAutoSync();
+    if(!autoSyncEnabled()) return;
+    if(!SHEET_WEBAPP_URL) return;
+    // chạy 1 lần ngay
+    autoSyncOnce();
+    autoSyncTimer = setInterval(()=>{
+      // nếu đang không mở tab này, giảm rủi ro spam
+      if(document.hidden) return;
+      autoSyncOnce();
+    }, autoSyncIntervalMs());
+  }
+  function stopAutoSync(){
+    if(autoSyncTimer){ clearInterval(autoSyncTimer); autoSyncTimer=null; }
+  }
+  function toggleAutoSync(){
+    if(!SHEET_WEBAPP_URL){
+      alert("⚠ Hãy bấm 'Cài Sheet URL' trước, rồi mới bật Auto Sync.");
+      return;
+    }
+    const on = !autoSyncEnabled();
+    if(on){
+      const ms = prompt("Chu kỳ đồng bộ (mili-giây). Gợi ý: 30000 = 30 giây", String(autoSyncIntervalMs()));
+      if(ms===null) return;
+      const n = Number(ms);
+      if(isFinite(n) && n>=5000){
+        localStorage.setItem(KEY_AUTO_SYNC_MS, String(Math.floor(n)));
+      }else{
+        alert("⚠ Chu kỳ không hợp lệ. Tối thiểu 5000ms.");
+        return;
+      }
+    }
+    setAutoSyncEnabled(on);
+  }
+
+  // tự khởi động lại khi mở trang (nếu đã bật trước đó)
+  window.addEventListener("load", ()=>{
+    updateAutoSyncBtn();
+    if(autoSyncEnabled()) startAutoSync();
+  });
+  // khi máy online lại → sync ngay
+  window.addEventListener("online", ()=>{
+    if(autoSyncEnabled()) autoSyncOnce();
+  });
+  document.addEventListener("visibilitychange", ()=>{
+    if(!document.hidden && autoSyncEnabled()) autoSyncOnce();
+  });
+
+
+
+  const STUDENTS = deepClone(STUDENTS_DEFAULT);
+
+  function loadCustomClasses(){
+    let cc={};
+    try{ cc=JSON.parse(localStorage.getItem(KEY_CUSTOM_CLASSES)||"{}"); }catch(e){ cc={}; }
+    for(const g of Object.keys(cc)){
+      if(!STUDENTS[g]) STUDENTS[g]={};
+      for(const cls of (cc[g]||[])){
+        if(!STUDENTS[g][cls]) STUDENTS[g][cls]=[];
+      }
+    }
+  }
+  function saveCustomClass(g, cls){
+    let cc={};
+    try{ cc=JSON.parse(localStorage.getItem(KEY_CUSTOM_CLASSES)||"{}"); }catch(e){ cc={}; }
+    if(!cc[g]) cc[g]=[];
+    if(!cc[g].includes(cls)) cc[g].push(cls);
+    cc[g].sort((a,b)=>a.localeCompare(b,"vi",{sensitivity:"base"}));
+    localStorage.setItem(KEY_CUSTOM_CLASSES, JSON.stringify(cc));
+  }
+  function removeCustomClass(g, cls){
+    let cc={};
+    try{ cc=JSON.parse(localStorage.getItem(KEY_CUSTOM_CLASSES)||"{}"); }catch(e){ cc={}; }
+    if(!cc[g]) return;
+    cc[g]=cc[g].filter(x=>x!==cls);
+    if(cc[g].length===0) delete cc[g];
+    localStorage.setItem(KEY_CUSTOM_CLASSES, JSON.stringify(cc));
+  }
+  function loadOverrides(){
+    let ov={};
+    try{ ov=JSON.parse(localStorage.getItem(KEY_OVERRIDES)||"{}"); }catch(e){ ov={}; }
+    for(const g of Object.keys(ov)){
+      if(!STUDENTS[g]) STUDENTS[g]={};
+      for(const c of Object.keys(ov[g]||{})){
+        STUDENTS[g][c]=Array.isArray(ov[g][c])? ov[g][c].slice(): [];
+      }
+    }
+  }
+  function saveOverride(g,c,list){
+    let ov={};
+    try{ ov=JSON.parse(localStorage.getItem(KEY_OVERRIDES)||"{}"); }catch(e){ ov={}; }
+    if(!ov[g]) ov[g]={};
+    ov[g][c]=list.slice();
+    localStorage.setItem(KEY_OVERRIDES, JSON.stringify(ov));
+  }
+  function removeOverride(g,c){
+    let ov={};
+    try{ ov=JSON.parse(localStorage.getItem(KEY_OVERRIDES)||"{}"); }catch(e){ ov={}; }
+    if(ov[g] && ov[g][c]){
+      delete ov[g][c];
+      if(Object.keys(ov[g]).length===0) delete ov[g];
+      localStorage.setItem(KEY_OVERRIDES, JSON.stringify(ov));
+    }
+  }
+
+  loadCustomClasses();
+  loadOverrides();
+
+  const state = {currentStudent:"",currentClass:"",count:0,score:0,total:30,timerId:null,tLeft:0,lastTickInt:null,currentQ:null,plan:[],gameStartMs:0};
+
+  const el = {
+    grade:$("grade"), classSelect:$("classSelect"), term:$("term"), level:$("level"), modeCount:$("modeCount"),
+    students:$("students"), ranking:$("ranking"),
+    classBadge:$("classBadge"), rankBadge:$("rankBadge"),
+    centerStatus:$("centerStatus"),
+    timer:$("timer"), question:$("question"), qCount:$("qCount"), qText:$("qText"), qSub:$("qSub"), answers:$("answers"),
+    statsPanel:$("statsPanel"), stBody:$("stBody"), stSummary:$("stSummary"),
+    gameBadge:$("gameBadge")
+  };
+
+  function lvText(lv){ return lv==="easy"?"Dễ":(lv==="medium"?"Trung bình":"Khó"); }
+  function updateBadges(){
+    el.classBadge.textContent = state.currentClass || "—";
+    el.rankBadge.textContent = state.currentClass ? `${state.currentClass} • Kỳ ${el.term.value}` : "—";
+    el.gameBadge.textContent = `🎯 Khối ${el.grade.value} • Kỳ ${el.term.value} • ${lvText(el.level.value)} • ${el.modeCount.value} câu`;
+  }
+  function setStatus(text){ el.centerStatus.textContent=text; }
+
+  function fillClassOptions(){
+    const g=String(el.grade.value);
+    const clsList = Object.keys(STUDENTS[g]||{}).sort((a,b)=>a.localeCompare(b,"vi",{sensitivity:"base"}));
+    el.classSelect.innerHTML = clsList.map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join("");
+    state.currentClass = el.classSelect.value || "";
+    updateBadges();
+  }
+
+  function renderStudents(){
+    const g=String(el.grade.value);
+    const c=String(el.classSelect.value);
+    state.currentClass=c;
+    updateBadges();
+
+    const list=(STUDENTS[g] && STUDENTS[g][c]) ? STUDENTS[g][c] : [];
+    el.students.innerHTML="";
+
+    list.forEach((rawName, idx)=>{
+      const name = fullNameFromList(rawName);
+      const d=document.createElement("div");
+      d.className="student";
+      d.style.background = TILE[idx % TILE.length];
+      d.innerHTML = `<span class="icon">${ICONS[idx % ICONS.length]}</span><span>${esc(name)}</span>`;
+
+      d.addEventListener("click", ()=>{
+        state.currentStudent=name;
+        [...el.students.querySelectorAll(".student")].forEach(x=>x.classList.remove("active"));
+        d.classList.add("active");
+        setStatus(`${name} — đã chọn`);
+        el.qSub.textContent = "";
+        el.qCount.textContent="";
+        el.qText.textContent = `Đã chọn: ${name}. Bấm Bắt đầu!`;
+      });
+      el.students.appendChild(d);
+    });
+  }
+
+  function rankKey(){
+    const c=el.classSelect.value, ky=el.term.value;
+    return `RANK_C${c}_KY_${ky}`;
+  }
+  function loadRanking(){ try{ return JSON.parse(localStorage.getItem(rankKey())||"{}"); }catch(e){ return {}; } }
+  function saveRanking(obj){ localStorage.setItem(rankKey(), JSON.stringify(obj||{})); }
+  function renderRanking(){
+    // Xếp hạng theo Lớp + Kỳ, tách theo Mức: Dễ/Trung bình/Khó
+    let all=[];
+    try{ all=JSON.parse(localStorage.getItem(KEY_ATTEMPTS)||"[]"); }catch(e){ all=[]; }
+    const data = filteredAttempts(all);
+
+    const levels = ["easy","medium","hard"];
+    const levelLabel = (lv)=> lv==="easy"?"Dễ":(lv==="medium"?"Trung bình":"Khó");
+
+    el.ranking.innerHTML = "";
+
+    // fallback nếu chưa có attempts: dùng xếp hạng lưu hiện tại (không tách mức)
+    if(!data || data.length===0){
+      const stored = loadRanking();
+      const entries = Object.entries(stored||{}).sort((A,B)=>{
+        const a = (A && A[1]) ? A[1] : {};
+        const b = (B && B[1]) ? B[1] : {};
+        const aBest = Number(a.best || 0);
+        const bBest = Number(b.best || 0);
+        if(bBest !== aBest) return bBest - aBest;
+        const aAtt  = Number(a.attempts || 0);
+        const bAtt  = Number(b.attempts || 0);
+        if(aAtt !== bAtt) return aAtt - bAtt;
+        return String(A[0]).localeCompare(String(B[0]), "vi", {sensitivity:"base"});
+      });
+
+      if(entries.length === 0){
+        el.ranking.innerHTML = `<div style="color:#14532d;font-weight:1000;">Chưa có dữ liệu</div>`;
+        return;
+      }
+      entries.slice(0,60).forEach(([name, obj], i)=>{
+        const sc = Number((obj && obj.best) || 0);
+        const div = document.createElement("div");
+        div.className = "rankItem";
+        div.innerHTML = `<div class="name">${i+1}. ${esc(name)}</div><div class="score">${sc}</div>`;
+        el.ranking.appendChild(div);
+      });
+      return;
+    }
+
+    let renderedAny = false;
+
+    levels.forEach(lv=>{
+      const rowsMap = new Map();
+      data.forEach(a=>{
+        if(String(a.level||"") !== lv) return;
+        const student = String(a.student||"");
+        if(!student) return;
+        const cur = rowsMap.get(student) || { student, best:0, attempts:0, bestTime:1e18, lastTime:"" };
+        cur.attempts += 1;
+        const sc = Number(a.score||0);
+        if(sc > cur.best) cur.best = sc;
+        const t = Number(a.durationSec ?? a.durationSeconds ?? 1e18);
+        if(Number.isFinite(t) && t < cur.bestTime) cur.bestTime = t;
+        cur.lastTime = String(a.time||cur.lastTime||"");
+        rowsMap.set(student, cur);
+      });
+
+      if(rowsMap.size===0) return;
+
+      // Title for level
+      const title = document.createElement("div");
+      title.className = "rankLevelTitle";
+      title.textContent = "Mức: " + levelLabel(lv);
+      el.ranking.appendChild(title);
+
+      const rows = [...rowsMap.values()].map(r=>({
+        student: r.student,
+        best: r.best,
+        attempts: r.attempts,
+        bestTime: r.bestTime
+      }));
+
+      // sort using same priority
+      rows.sort((a,b)=>{
+        if(b.best !== a.best) return b.best - a.best;
+        const ta = Number(a.bestTime||1e18), tb = Number(b.bestTime||1e18);
+        if(ta !== tb) return ta - tb;
+        if(a.attempts !== b.attempts) return a.attempts - b.attempts;
+        return String(a.student).localeCompare(String(b.student), "vi", {sensitivity:"base"});
+      });
+
+      rows.slice(0,60).forEach((r, i)=>{
+        const div = document.createElement("div");
+        div.className = "rankItem";
+        div.title = `Điểm cao nhất: ${r.best} • Thời gian tốt nhất: ${(r.bestTime>=1e17?'-':r.bestTime+'s')} • Số lần: ${r.attempts}`;
+        div.innerHTML = `<div class="name">${i+1}. ${esc(r.student)}</div><div class="score">${r.best}</div>`;
+        el.ranking.appendChild(div);
+      });
+
+      renderedAny = true;
+    });
+
+    if(!renderedAny){
+      el.ranking.innerHTML = `<div style="color:#14532d;font-weight:1000;">Chưa có dữ liệu</div>`;
+    }
+  }
+
+  function timeLimitSeconds(grade, level){
+    grade=String(grade); level=String(level);
+    const map = {"1": { easy:15, medium:20, hard:25 },"2": { easy:30, medium:20, hard:15 },"3": { easy:40, medium:35, hard:30 }};
+    return (map[grade] && map[grade][level]) ? map[grade][level] : 20;
+  }
+  function stopTimer(){ if(state.timerId){ clearInterval(state.timerId); state.timerId=null; } }
+  function tickSound(secLeft){
+    if(!audioEnabled) return;
+    if(secLeft<=3) beep(680 + (3-secLeft)*120, 0.06);
+    else beep(420, 0.04);
+  }
+  function startTimer(){
+    stopTimer();
+    const limit = timeLimitSeconds(el.grade.value, el.level.value);
+    state.tLeft = limit;
+    state.lastTickInt = Math.ceil(state.tLeft);
+    el.timer.textContent = "⏱ " + state.tLeft.toFixed(1) + "s";
+    tickSound(state.lastTickInt);
+
+    state.timerId=setInterval(()=>{
+      state.tLeft=Math.max(0, state.tLeft-0.1);
+      el.timer.textContent="⏱ "+state.tLeft.toFixed(1)+"s";
+      const secLeft = Math.ceil(state.tLeft);
+      if(secLeft !== state.lastTickInt && state.tLeft>0){
+        state.lastTickInt = secLeft;
+        tickSound(secLeft);
+      }
+      if(state.tLeft<=0){
+        stopTimer();
+        beep(220,0.10);
+        nextQuestion();
+      }
+    },100);
+  }
+
+  function mkQ(text, answer, choices, meta){
+    const ans = String(answer);
+
+    // 1) gom lựa chọn + đảm bảo có đáp án
+    let arr = (choices||[]).map(x=>String(x));
+    if(!arr.includes(ans)) arr.push(ans);
+
+    // 2) loại trùng
+    let uniq = [...new Set(arr)];
+
+    // 3) nếu chưa đủ 4 đáp án -> bù thêm (không trùng)
+    const isNum = /^-?\d+(?:\.\d+)?$/.test(ans);
+    const allNum = uniq.every(x=>/^-?\d+(?:\.\d+)?$/.test(x));
+
+    if(uniq.length < 4){
+      if([">","<","=","≥","≤"].includes(ans)){
+        const pool=[">","<","=","≠","≥","≤"];
+        for(const p of pool){
+          if(uniq.length>=4) break;
+          if(!uniq.includes(p)) uniq.push(p);
+        }
+      }else if(isNum && allNum){
+        const base = Number(ans);
+        const spread = Math.max(3, Math.ceil(Math.abs(base)*0.2)+2);
+        while(uniq.length<4){
+          let v = base + randInt(-spread, spread);
+          if(v<0) v = Math.abs(v);
+          const s = String(v);
+          if(s!==ans && !uniq.includes(s)) uniq.push(s);
+        }
+      }else{
+        const pool=["Không biết","Khác","A","B","C","D"];
+        for(const p of pool){
+          if(uniq.length>=4) break;
+          if(!uniq.includes(p)) uniq.push(p);
+        }
+      }
+    }
+
+    // 4) trộn và lấy 4 đáp án, luôn giữ đáp án đúng
+    let ch = shuffle(uniq);
+    ch = ch.slice(0,4);
+    if(!ch.includes(ans)){
+      ch[0] = ans;
+      ch = shuffle(ch);
+    }
+
+    // 5) đảm bảo không trùng lần cuối
+    ch = [...new Set(ch)];
+    while(ch.length<4){
+      // bù nhanh nếu thiếu do set()
+      if(isNum){
+        const base = Number(ans);
+        const v = base + randInt(1,9);
+        const s = String(v);
+        if(!ch.includes(s)) ch.push(s);
+      }else{
+        const pool=["≠","?","Khác"];
+        for(const p of pool){
+          if(ch.length>=4) break;
+          if(!ch.includes(p)) ch.push(p);
+        }
+      }
+    }
+    ch = shuffle(ch).slice(0,4);
+
+    return { text, answer: ans, choices: ch, meta: meta||"" };
+  }
+  function nearNumber(n, spread, count){
+    const out=new Set([Number(n)]);
+    while(out.size<count){
+      let v=Number(n)+randInt(-spread,spread);
+      if(v<0) v=Math.abs(v);
+      out.add(v);
+    }
+    return [...out].map(x=>String(x));
+  }
+  function exactDivision(divisorMin, divisorMax, quotientMin, quotientMax){
+    const d = randInt(divisorMin, divisorMax);
+    const q = randInt(quotientMin, quotientMax);
+    return { dividend: d*q, divisor:d, quotient:q };
+  }
+
+  function l1_compare10(level){
+    const a=randInt(0,10), b=randInt(0,10);
+    const sign = a>b?">":(a<b?"<":"=");
+    const choices=[">","<","="];
+    return mkQ(`So sánh: ${a} ☐ ${b}`, sign, choices, "So sánh phạm vi 10");
+  }
+  function l1_addsub10(level){
+    if(Math.random()<0.55){
+      const a=randInt(0,10);
+      const b=randInt(0,10-a);
+      const ans=a+b;
+      return mkQ(`${a} + ${b} = ?`, ans, nearNumber(ans, 3, 4), "Cộng trong 10");
+    }else{
+      const a=randInt(0,10);
+      const b=randInt(0,a);
+      const ans=a-b;
+      return mkQ(`${a} − ${b} = ?`, ans, nearNumber(ans, 3, 4), "Trừ trong 10");
+    }
+  }
+  function l1_addsub100_nocarry(level){
+    const max = (level==="easy")?50:(level==="medium"?80:100);
+    if(Math.random()<0.55){
+      let a=randInt(10,max), b=randInt(10,max);
+      if((a%10)+(b%10) >= 10) b = (b - ((a%10)+(b%10)-9));
+      if(b<10) b=10;
+      const ans=a+b;
+      if(ans>100){ a=Math.max(10,a-20); }
+      return mkQ(`${a} + ${b} = ?`, a+b, nearNumber(a+b, 10, 4), "Cộng không nhớ phạm vi 100");
+    }else{
+      let a=randInt(20,max), b=randInt(10,a-1);
+      if((a%10) < (b%10)) b = Math.max(10, b - ((b%10)-(a%10)));
+      const ans=a-b;
+      return mkQ(`${a} − ${b} = ?`, ans, nearNumber(ans, 10, 4), "Trừ không mượn phạm vi 100");
+    }
+  }
+  function l1_muldiv_simple(level){
+    if(Math.random()<0.55){
+      const a = randInt(1, (level==="hard")?5:4);
+      const b = randInt(1, (level==="hard")?5:4);
+      const ans=a*b;
+      return mkQ(`${a} × ${b} = ?`, ans, nearNumber(ans, 3, 4), "Nhân đơn giản");
+    }else{
+      const div=exactDivision(2,5,1,(level==="hard")?6:5);
+      return mkQ(`${div.dividend} ÷ ${div.divisor} = ?`, div.quotient, nearNumber(div.quotient, 2, 4), "Chia đơn giản (chia hết)");
+    }
+  }
+  function l1_length(level){
+    const a=randInt(10, (level==="easy")?50:(level==="medium"?80:120));
+    const m = Math.floor(a/100);
+    const cm = a%100;
+    const correct = `${m} m ${cm} cm`;
+    const choices=[correct, `${m} m ${Math.min(99,cm+10)} cm`, `${Math.max(0,m-1)} m ${cm} cm`, `${m} m ${Math.max(0,cm-10)} cm`];
+    return mkQ(`Đổi: ${a} cm = ?`, correct, choices, "Độ dài");
+  }
+  function l1_time_calendar(level){
+    const h=randInt(1,12);
+    const correct = `${h} giờ`;
+    const choices=[correct, `${h+1} giờ`, `${Math.max(1,h-1)} giờ`, `${h} giờ 30 phút`];
+    return mkQ(`Đồng hồ chỉ ${h}:00. Đọc giờ là:`, correct, choices, "Giờ đúng");
+  }
+
+  function l2_addsub_100(level, allow3){
+    if(allow3 && level==="hard" && Math.random()<0.55){
+      const c=randInt(1,9);
+      let a=randInt(20,90), b=randInt(10,80);
+      if(a+b+c>100){ a=Math.max(20,a-20); }
+      const ans=a+b+c;
+      return mkQ(`${a} + ${b} + ${c} = ?`, ans, nearNumber(ans, 10, 4), "Cộng 3 số (1 chữ số)");
+    }
+    if(Math.random()<0.55){
+      let a=randInt(20,100), b=randInt(0,100);
+      if(a+b>100) b = 100-a;
+      const ans=a+b;
+      return mkQ(`${a} + ${b} = ?`, ans, nearNumber(ans, 10, 4), "Cộng <=100");
+    }else{
+      let a=randInt(20,100), b=randInt(0,a);
+      const ans=a-b;
+      return mkQ(`${a} − ${b} = ?`, ans, nearNumber(ans, 10, 4), "Trừ không âm");
+    }
+  }
+  function l2_mass_capacity(level){
+    const kind = Math.random()<0.5 ? "kg" : "l";
+    const a = randInt(1,9);
+    const b = randInt(100,900);
+    const total = a*1000 + b;
+    const correct = `${a} ${kind} ${b} ${kind==="kg"?"g":"ml"}`;
+    const choices=[correct, `${a} ${kind} ${Math.min(999,b+100)} ${kind==="kg"?"g":"ml"}`, `${Math.max(0,a-1)} ${kind} ${b} ${kind==="kg"?"g":"ml"}`, `${a} ${kind} ${Math.max(0,b-100)} ${kind==="kg"?"g":"ml"}`];
+    return mkQ(`Đổi: ${total} ${kind==="kg"?"g":"ml"} = ?`, correct, choices, (kind==="kg"?"Khối lượng":"Dung tích"));
+  }
+  function l2_muldiv_2_5(level){
+    const table = (Math.random()<0.5)?2:5;
+    if(Math.random()<0.55){
+      const x = (level==="easy")?randInt(0,5):(level==="medium"?randInt(0,7):randInt(0,10));
+      const ans=table*x;
+      return mkQ(`${table} × ${x} = ?`, ans, nearNumber(ans, 5, 4), "Nhân bảng 2,5");
+    }else{
+      const div=exactDivision(table, table, 1, (level==="hard")?10:8);
+      return mkQ(`${div.dividend} ÷ ${div.divisor} = ?`, div.quotient, nearNumber(div.quotient, 3, 4), "Chia bảng 2,5");
+    }
+  }
+  function l2_1000_addsub_carry1(level, hard3){
+    if(hard3 && level==="hard" && Math.random()<0.5){
+      const c=randInt(10,99);
+      let a=randInt(200,900), b=randInt(100,800);
+      if(a+b+c>1000){ a=Math.max(100,a-200); }
+      const ans=a+b+c;
+      return mkQ(`${a} + ${b} + ${c} = ?`, ans, nearNumber(ans, 50, 4), "Cộng 3 số (1 số 2 chữ số)");
+    }
+    if(Math.random()<0.55){
+      let a=randInt(100,900), b=randInt(100,900);
+      if((a%10)+(b%10) < 10) b += 10;
+      if(a+b>1000) a=Math.max(100,a-200);
+      const ans=a+b;
+      return mkQ(`${a} + ${b} = ?`, ans, nearNumber(ans, 50, 4), "Cộng <=1000 (nhớ 1 lần)");
+    }else{
+      let a=randInt(200,1000), b=randInt(100,a);
+      const ans=a-b;
+      return mkQ(`${a} − ${b} = ?`, ans, nearNumber(ans, 50, 4), "Trừ <=1000");
+    }
+  }
+  function l2_length(level){
+    const m=randInt(1,9), cm=randInt(0,99);
+    const total=m*100+cm;
+    const correct=String(total);
+    const choices=[correct, total+10, Math.max(0,total-10), total+100].map(String);
+    return mkQ(`Đổi: ${m} m ${cm} cm = ? cm`, correct, choices, "Độ dài");
+  }
+  function l2_prob_stat(level){
+    const red=randInt(1,6), blue=randInt(1,6), green=randInt(1,6);
+    const total=red+blue+green;
+    return mkQ(`Trong hộp có ${red} bi đỏ, ${blue} bi xanh, ${green} bi vàng. Hỏi có tất cả bao nhiêu viên bi?`, total, nearNumber(total, 3, 4), "Thống kê");
+  }
+
+  
+// ====== Grade 3 (KNTT) ======
+// HKI: Bảng nhân/chia 1-9; số đến 1000 so sánh, cộng trừ (có nhớ 2 lần); 
+//      nhân/chia 2-3 chữ số với 1 chữ số; chia hết & chia có dư trong phạm vi 100;
+//      biểu thức số (có + - × ÷, với × ÷ chỉ với số 1 chữ số) theo tỉ lệ 10%-20%-30%.
+// HKII: số đến 100000 so sánh, cộng, trừ; nhân/chia số 3-5 chữ số với 1 chữ số (kq<=100000) theo tỉ lệ 10%-20%-30%;
+//       làm tròn chục/trăm; số La Mã (đáp án không trùng).
+
+function l3_tables_1_9(level){
+  const table=randInt(1,9);
+  if(Math.random()<0.55){
+    const x = (level==="easy")?randInt(0,8):(level==="medium"?randInt(0,9):randInt(0,10));
+    const ans=table*x;
+    return mkQ(`${table} × ${x} = ?`, ans, nearNumber(ans, 10, 4), "Bảng nhân 1-9");
+  }else{
+    const q = (level==="hard")?randInt(1,10):randInt(1,9);
+    const dividend = table*q;
+    return mkQ(`${dividend} ÷ ${table} = ?`, q, nearNumber(q, 4, 4), "Bảng chia 1-9");
+  }
+}
+
+function l3_addsub_1000_carry2(level){
+  // tạo phép cộng/trừ 3 chữ số có nhớ/ mượn 2 lần (hai hàng khác nhau) đơn giản
+  if(Math.random()<0.55){
+    let a=randInt(200,900), b=randInt(200,900);
+    // cố gắng tạo nhớ ở hàng đơn vị và hàng chục
+    if(((a%10)+(b%10))<10) b += 10;
+    if((((Math.floor(a/10)%10)+(Math.floor(b/10)%10))<10)) b += 100;
+    if(a+b>1000) a=Math.max(200,a-300);
+    const ans=a+b;
+    return mkQ(`${a} + ${b} = ?`, ans, nearNumber(ans, 60, 4), "Cộng có nhớ (<=1000)");
+  }else{
+    let a=randInt(400,1000), b=randInt(100,a-1);
+    // cố gắng mượn ở hàng đơn vị và hàng chục
+    if((a%10)>=(b%10)) b += 10;
+    if((Math.floor(a/10)%10)>=(Math.floor(b/10)%10)) b += 100;
+    if(b>=a) b=Math.floor(a/2);
+    const ans=a-b;
+    return mkQ(`${a} − ${b} = ?`, ans, nearNumber(ans, 60, 4), "Trừ có mượn (<=1000)");
+  }
+}
+
+function l3_compare_1000(){
+  const a=randInt(0,1000), b=randInt(0,1000);
+  const sign = a>b?">":(a<b?"<":"=");
+  return mkQ(`So sánh: ${a} ☐ ${b}`, sign, [">","<","="], "So sánh (<=1000)");
+}
+
+function l3_muldiv_2or3digit_by1(level){
+  // HKI: nhân/chia số 2-3 chữ số với 1 chữ số (kq <= 1000), ưu tiên bài dễ
+  const op = Math.random()<0.55 ? "mul" : "div";
+  const digitMode = (level==="easy") ? 2 : (level==="medium" ? (Math.random()<0.7?2:3) : 3);
+  const d = randInt(2,9);
+  if(op==="mul"){
+    let a = (digitMode===2) ? randInt(10,99) : randInt(100,999);
+    if(a*d>1000) a = Math.max(digitMode===2?10:100, Math.floor(1000/d) - randInt(0, digitMode===2?20:80));
+    const ans=a*d;
+    return mkQ(`${a} × ${d} = ?`, ans, nearNumber(ans, 80, 4), digitMode===2?"Nhân 2CS×1CS":"Nhân 3CS×1CS");
+  }else{
+    // chia hết
+    const q = (digitMode===2) ? randInt(10,99) : randInt(100,999);
+    let dividend = q*d;
+    if(dividend>1000){
+      const q2 = Math.floor(1000/d);
+      dividend = q2*d;
+      return mkQ(`${dividend} ÷ ${d} = ?`, q2, nearNumber(q2, 30, 4), digitMode===2?"Chia hết 2CS÷1CS":"Chia hết 3CS÷1CS");
+    }
+    return mkQ(`${dividend} ÷ ${d} = ?`, q, nearNumber(q, 30, 4), digitMode===2?"Chia hết 2CS÷1CS":"Chia hết 3CS÷1CS");
+  }
+}
+
+function l3_div_exact_or_remainder_under100(level){
+  if(Math.random()<0.55){
+    // chia hết trong 100
+    const d=randInt(2,9);
+    const q=randInt(2,(level==="hard")?12:10);
+    const dividend=d*q;
+    return mkQ(`${dividend} ÷ ${d} = ?`, q, nearNumber(q, 3, 4), "Chia hết (<=100)");
+  }else{
+    // chia có dư trong 100
+    const divisor=randInt(2,9);
+    const dividend=randInt(10,99);
+    const q=Math.floor(dividend/divisor);
+    const r=dividend%divisor;
+    const ans=`${q} dư ${r}`;
+    const choices=[ans, `${q} dư ${Math.min(divisor-1, r+1)}`, `${Math.max(0,q-1)} dư ${r}`, `${q} dư ${Math.max(0,r-1)}`];
+    return mkQ(`${dividend} ÷ ${divisor} = ? (dạng: q dư r)`, ans, choices, "Chia có dư (<=100)");
+  }
+}
+
+function l3_expr_hk1(level){
+  // Biểu thức có + - × ÷ ; × ÷ chỉ với số 1 chữ số
+  // ✅ Đảm bảo phép chia LUÔN chia hết và kết quả <= 1000
+  const c = randInt(2,9); // 1 chữ số
+  const form = (level==="easy") ? randInt(1,3) : (level==="medium" ? randInt(1,4) : randInt(1,5));
+
+  // helper chọn a,b sao cho a+b = sum
+  const splitSum = (sum)=>{
+    if(sum<=1) return [0,sum];
+    const a = randInt(0, sum);
+    return [a, sum-a];
+  };
+
+  if(form===1){ // (a+b)×c
+    const maxSum = Math.max(10, Math.floor(1000 / c));
+    const sum = randInt(10, maxSum);
+    const [a,b] = splitSum(sum);
+    const ans = sum * c;
+    return mkQ(`( ${a} + ${b} ) × ${c} = ?`, ans, nearNumber(ans, 80, 4), "Chủ đề: Biểu thức (≤1000)");
+  }
+
+  if(form===2){ // (a-b)×c
+    const maxDiff = Math.max(5, Math.floor(1000 / c));
+    const diff = randInt(5, maxDiff);
+    const b = randInt(0, 200);
+    const a = b + diff;
+    const ans = diff * c;
+    return mkQ(`( ${a} − ${b} ) × ${c} = ?`, ans, nearNumber(ans, 80, 4), "Chủ đề: Biểu thức (≤1000)");
+  }
+
+  if(form===3){ // (a+b)÷c (chia hết)
+    const qMax = Math.max(5, Math.floor(1000 / c));
+    const q = randInt(2, qMax);
+    const sum = q * c;
+    const [a,b] = splitSum(sum);
+    return mkQ(`( ${a} + ${b} ) ÷ ${c} = ?`, q, nearNumber(q, 20, 4), "Chủ đề: Biểu thức (≤1000, chia hết)");
+  }
+
+  if(form===4){ // (a-b)÷c (chia hết)
+    const qMax = Math.max(5, Math.floor(1000 / c));
+    const q = randInt(2, qMax);
+    const diff = q * c; // a-b
+    const b = randInt(0, 300);
+    const a = b + diff;
+    return mkQ(`( ${a} − ${b} ) ÷ ${c} = ?`, q, nearNumber(q, 20, 4), "Chủ đề: Biểu thức (≤1000, chia hết)");
+  }
+
+  // form===5: a + b×c (không chia)
+  const b = randInt(2, 60);
+  const bc = b * c;
+  const a = randInt(0, Math.max(0, 1000 - bc));
+  const ans = a + bc;
+  return mkQ(`${a} + ( ${b} × ${c} ) = ?`, ans, nearNumber(ans, 80, 4), "Chủ đề: Biểu thức (≤1000)");
+}
+
+function l3_compare_addsub_100000(level){
+  // HKII: compare/add/sub <= 100000
+  const r=Math.random();
+  if(r<0.34){
+    const a=randInt(0,100000), b=randInt(0,100000);
+    const sign = a>b?">":(a<b?"<":"=");
+    return mkQ(`So sánh: ${a} ☐ ${b}`, sign, [">","<","="], "So sánh (<=100000)");
+  }
+  if(r<0.67){
+    let a=randInt(1000,90000), b=randInt(1000,90000);
+    if(a+b>100000) a=Math.max(1000,a-20000);
+    const ans=a+b;
+    return mkQ(`${a} + ${b} = ?`, ans, nearNumber(ans, 5000, 4), "Cộng (<=100000)");
+  }else{
+    let a=randInt(1000,100000), b=randInt(0,a);
+    const ans=a-b;
+    return mkQ(`${a} − ${b} = ?`, ans, nearNumber(ans, 5000, 4), "Trừ (<=100000)");
+  }
+}
+
+function l3_muldiv_3to5digit_by1(level){
+  // HKII: nhân/chia 3-5 chữ số với 1 chữ số (kq<=100000)
+  const d=randInt(2,9);
+  const op = Math.random()<0.55 ? "mul" : "div";
+  const digits = (level==="easy") ? (Math.random()<0.8?3:4) : (level==="medium" ? (Math.random()<0.6?4:3) : (Math.random()<0.6?5:4));
+  if(op==="mul"){
+    let a;
+    if(digits===3) a=randInt(100,999);
+    else if(digits===4) a=randInt(1000,9999);
+    else a=randInt(10000,99999);
+    if(a*d>100000) a=Math.max(digits===3?100:(digits===4?1000:10000), Math.floor(100000/d)-randInt(0, digits===5?500:200));
+    const ans=a*d;
+    return mkQ(`${a} × ${d} = ?`, ans, nearNumber(ans, 8000, 4), `Nhân ${digits}CS×1CS`);
+  }else{
+    // chia hết
+    let q;
+    if(digits===3) q=randInt(100,999);
+    else if(digits===4) q=randInt(1000,9999);
+    else q=randInt(10000,11111);
+    let dividend=q*d;
+    if(dividend>100000){
+      q=Math.floor(100000/d)-randInt(0,200);
+      dividend=q*d;
+    }
+    return mkQ(`${dividend} ÷ ${d} = ?`, q, nearNumber(q, 1200, 4), `Chia hết ${digits}CS÷1CS`);
+  }
+}
+
+function l3_round(level){
+  const n=randInt(100,99999);
+  const to = Math.random()<0.5 ? 10 : 100;
+  const rounded = Math.round(n/to)*to;
+  const choices = Array.from(new Set([rounded, Math.floor(n/to)*to, Math.ceil(n/to)*to, rounded+to].map(String)));
+  while(choices.length<4) choices.push(String(rounded + randInt(-3,3)*to));
+  return mkQ(`Làm tròn số ${n} đến hàng ${to===10?"chục":"trăm"}:`, String(rounded), shuffle(choices).slice(0,4), "Làm tròn");
+}
+
+function toRoman(num){
+  const map=[["M",1000],["CM",900],["D",500],["CD",400],["C",100],["XC",90],["L",50],["XL",40],["X",10],["IX",9],["V",5],["IV",4],["I",1]];
+  let n=num, s="";
+  for(const [sym,val] of map){
+    while(n>=val){ s+=sym; n-=val; }
+  }
+  return s;
+}
+
+function l3_roman_unique(){
+  // hỏi: số La Mã nào viết đúng số X?
+  const x=randInt(1,50);
+  const correct=toRoman(x);
+  const set=new Set([correct]);
+  while(set.size<4){
+    const y = x + randInt(-6,6);
+    if(y<=0) continue;
+    set.add(toRoman(y));
+  }
+  const choices=shuffle([...set]);
+  return mkQ(`Số La Mã của ${x} là:`, correct, choices, "Số La Mã");
+}
+
+
+function buildPlan(total, grade, term, level){
+  const g=Number(grade), t=Number(term);
+  const lv=String(level);
+
+  // helper: ensure required kinds exist at least once
+  const plan=[];
+  function pushReq(req){
+    req.forEach(k=>plan.push(k));
+  }
+
+  if(g===1 && t===1){
+    // L1 HKI: compare <=10, add/sub <=10
+    pushReq(["compare10","add10","sub10"]);
+    while(plan.length<total){
+      plan.push(["compare10","add10","sub10"][randInt(0,2)]);
+    }
+  }else if(g===1 && t===2){
+    // L1 HKII: compare <=100, add/sub no-carry <=100, length, time/calendar
+    pushReq(["compare100","add100_nc","sub100_nc","length","time"]);
+    while(plan.length<total){
+      const pool=["compare100","add100_nc","sub100_nc","length","time"];
+      // tăng phép tính theo mức
+      if(lv==="hard") pool.push("add100_nc","sub100_nc");
+      plan.push(pool[randInt(0,pool.length-1)]);
+    }
+  }else if(g===2 && t===1){
+    // L2 HKI: add/sub 20-100, mass/capacity (convert + compare), hard: add/sub 3 numbers with one 1-digit
+    pushReq(["add100","sub100","mass"]);
+    while(plan.length<total){
+      const pool=["add100","sub100","mass","add100","sub100","compare"];
+      if(lv==="hard") pool.push("add3_1d","sub3_1d");
+      plan.push(pool[randInt(0,pool.length-1)]);
+    }
+  }else if(g===2 && t===2){
+    // L2 HKII: mul/div tables 2,5 ; compare/add/sub within 1000 carry-1; length; stat
+    pushReq(["mul25","div25","add1000_c1","sub1000_c1","length","stat"]);
+    while(plan.length<total){
+      const pool=["mul25","div25","add1000_c1","sub1000_c1","length","stat","compare"];
+      if(lv==="hard") pool.push("add3_2d_1000","sub3_2d_1000");
+      plan.push(pool[randInt(0,pool.length-1)]);
+    }
+  }else if(g===3 && t===1){
+    // L3 HKI: tables 1-9; compare/add/sub <=1000 (carry twice); mul/div 2-3 digits with 1 digit; div exact & remainder <=100; expressions (+-*/ with * or / by 1 digit) in <=1000 at 10/20/30%
+    pushReq(["mul9","div9","add1000_c2","sub1000_c2","divrem100","mul2d1d","div2d1d"]);
+    const exprChance = (lv==="easy")?0.10:(lv==="medium"?0.20:0.30);
+    while(plan.length<total){
+      const r=Math.random();
+      if(r<exprChance) plan.push("expr1000");
+      else{
+        const pool=["mul9","div9","compare1000","add1000_c2","sub1000_c2","divrem100","mul2d1d","div2d1d","mul3d1d","div3d1d"];
+        plan.push(pool[randInt(0,pool.length-1)]);
+      }
+    }
+  }else{
+    // L3 HKII: compare/add/sub <=100000; mul/div 3-5 digits by 1 digit with 10/20/30%; rounding; roman
+    pushReq(["compare100000","add100000","sub100000","round10_100","roman"]);
+    const mdChance = (lv==="easy")?0.10:(lv==="medium"?0.20:0.30);
+    while(plan.length<total){
+      const r=Math.random();
+      if(r<mdChance) plan.push(["mul3to5_1d","div3to5_1d"][randInt(0,1)]);
+      else{
+        const pool=["compare100000","add100000","sub100000","round10_100","roman"];
+        plan.push(pool[randInt(0,pool.length-1)]);
+      }
+    }
+  }
+  return shuffle(plan).slice(0,total);
+}
+
+
+
+function generateByKind(kind){
+  const g=Number(el.grade.value), t=Number(el.term.value);
+  const lv=String(el.level.value);
+
+  // ===== LỚP 1 =====
+  if(g===1 && t===1){
+    if(kind==="compare10") return l1_compare10(lv);
+    if(kind==="add10") return l1_add10(lv);
+    if(kind==="sub10") return l1_sub10(lv);
+    return l1_add10(lv);
+  }
+  if(g===1 && t===2){
+    if(kind==="compare100") return l1_compare100(lv);
+    if(kind==="add100_nc") return l1_add100_nocarry(lv);
+    if(kind==="sub100_nc") return l1_sub100_noborrow(lv);
+    if(kind==="length") return l1_length(lv);
+    if(kind==="time") return l1_time_calendar(lv);
+    return l1_add100_nocarry(lv);
+  }
+
+  // ===== LỚP 2 =====
+  if(g===2 && t===1){
+    if(kind==="mass") return l2_mass_capacity(lv);
+    if(kind==="add3_1d") return l2_add3_with_1digit_100(lv);
+    if(kind==="sub3_1d") return l2_sub3_with_1digit_100(lv);
+    if(kind==="add100") return l2_add_100(lv);
+    if(kind==="sub100") return l2_sub_100(lv);
+    if(kind==="compare") return l2_compare_100(lv);
+    return l2_add_100(lv);
+  }
+  if(g===2 && t===2){
+    if(kind==="mul25") return l2_muldiv_2_5(lv, "mul");
+    if(kind==="div25") return l2_muldiv_2_5(lv, "div");
+    if(kind==="add1000_c1") return l2_add_1000_carry1(lv);
+    if(kind==="sub1000_c1") return l2_sub_1000_borrow1(lv);
+    if(kind==="add3_2d_1000") return l2_add3_with_2digit_1000(lv);
+    if(kind==="sub3_2d_1000") return l2_sub3_with_2digit_1000(lv);
+    if(kind==="length") return l2_length(lv);
+    if(kind==="stat") return l2_prob_stat(lv);
+    if(kind==="compare") return l2_compare_1000(lv);
+    return l2_add_1000_carry1(lv);
+  }
+
+  // ===== LỚP 3 =====
+  if(g===3 && t===1){
+    if(kind==="mul9") return l3_tables_1_9(lv, "mul");
+    if(kind==="div9") return l3_tables_1_9(lv, "div");
+    if(kind==="compare1000") return l3_compare_1000(lv);
+    if(kind==="add1000_c2") return l3_add_1000_carry2(lv);
+    if(kind==="sub1000_c2") return l3_sub_1000_borrow2(lv);
+    if(kind==="divrem100") return l3_div_exact_or_remainder_under100(lv);
+    if(kind==="mul2d1d") return l3_mul_2d_1d(lv);
+    if(kind==="div2d1d") return l3_div_2d_1d(lv);
+    if(kind==="mul3d1d") return l3_mul_3d_1d(lv);
+    if(kind==="div3d1d") return l3_div_3d_1d(lv);
+    if(kind==="expr1000") return l3_expr_1000_mix(lv);
+    return l3_compare_1000(lv);
+  }else{
+    if(kind==="compare100000") return l3_compare_100000(lv);
+    if(kind==="add100000") return l3_add_100000(lv);
+    if(kind==="sub100000") return l3_sub_100000(lv);
+    if(kind==="mul3to5_1d") return l3_mul_3to5d_1d(lv);
+    if(kind==="div3to5_1d") return l3_div_3to5d_1d(lv);
+    if(kind==="round10_100") return l3_round_10_100(lv);
+    if(kind==="roman") return l3_roman_unique(lv);
+    return l3_add_100000(lv);
+  }
+}
+
+function renderQuestion(){
+    const kind = state.plan[state.count-1] || "add";
+    state.currentQ = generateByKind(kind);
+
+    $("qSub").textContent = state.currentQ.meta ? `Chủ đề: ${state.currentQ.meta}` : "";
+    $("qCount").textContent = `Câu ${state.count}/${state.total}`;
+    $("qText").textContent = state.currentQ.text;
+
+    el.answers.innerHTML="";
+    state.currentQ.choices.forEach((v,i)=>{
+      const b=document.createElement("div");
+      b.className="ansBtn";
+      b.style.background = TILE[i % TILE.length];
+      b.textContent=String(v);
+      b.addEventListener("click", ()=>checkAnswer(String(v)));
+      el.answers.appendChild(b);
+    });
+    startTimer();
+  }
+
+  function nextQuestion(){
+    if(state.count>=state.total){ finishGame(); return; }
+    state.count++;
+    renderQuestion();
+  }
+
+  function checkAnswer(chosen){
+    stopTimer();
+    const correct=String(state.currentQ.answer);
+    const nodes=[...el.answers.querySelectorAll(".ansBtn")];
+
+    nodes.forEach(n=>{
+      if(String(n.textContent)===correct) n.classList.add("correct");
+      if(String(n.textContent)===String(chosen) && String(chosen)!==correct) n.classList.add("wrong");
+      n.classList.add("disabled");
+    });
+
+    if(String(chosen)===correct){ state.score++; beep(760,0.06); }
+    else beep(230,0.08);
+
+    setTimeout(()=>nextQuestion(), 650);
+  }
+
+  function addAttempt(obj){
+    let arr=[];
+    try{ arr=JSON.parse(localStorage.getItem(KEY_ATTEMPTS)||"[]"); }catch(e){ arr=[]; }
+    arr.push(obj);
+    localStorage.setItem(KEY_ATTEMPTS, JSON.stringify(arr));
+  }
+
+  function finishGame(){
+    stopTimer();
+    el.timer.textContent="⏱";
+    setStatus(`${state.currentStudent} — đã làm xong`);
+    $("qSub").textContent="";
+    $("qCount").textContent="";
+    $("qText").textContent = `🎉 ${state.currentStudent} đạt ${state.score}/${state.total} điểm`;
+    el.answers.innerHTML="";
+
+    const rank=loadRanking();
+    const cur = rank[state.currentStudent] || {best:0, attempts:0};
+    cur.attempts = Number(cur.attempts||0) + 1;
+    cur.best = Math.max(Number(cur.best||0), state.score);
+    rank[state.currentStudent]=cur;
+    saveRanking(rank);
+    renderRanking();
+
+    // 🎉 Hiệu ứng tung hoa khi kết thúc (v11)
+    try{
+      confettiStart(2600);
+      try{ playCongratsSound(); fireworksStart(2600); }catch(e){}
+      const nowRank = loadRanking();
+      const top1 = isTop1Now(nowRank, state.currentStudent);
+      if(top1) showWinToast("🏆 CHÚC MỪNG! Bạn đã đứng đầu!", `Điểm: ${state.score}/${state.total} • Lớp ${el.classSelect.value}`);
+      else showWinToast("🎉 Hoàn thành bài thi!", `Điểm: ${state.score}/${state.total} • Cố gắng lên nhé!`);
+    }catch(e){}
+
+    const attemptObj = {
+      time: new Date().toLocaleString("vi-VN"),
+      student: state.currentStudent,
+      className: el.classSelect.value,
+      grade: el.grade.value,
+      term: el.term.value,
+      level: el.level.value,
+      count: el.modeCount.value,
+      score: state.score,
+      total: state.total,
+      durationSec: Math.max(0, Math.round((Date.now() - (state.gameStartMs||Date.now()))/1000))
+    };
+    addAttempt(attemptObj);
+    // ✅ Gửi lên Google Sheet (nếu đã cài URL)
+    sheetPostAttempt(attemptObj);
+}
+
+  function startGame(){
+    ensureAudio();
+    if(!state.currentStudent){ alert("⚠ Hãy chọn học sinh trước!"); return; }
+    state.gameStartMs=Date.now();
+    state.score=0; state.count=0; state.total=Number(el.modeCount.value||30);
+    state.plan = buildPlan(state.total, el.grade.value, el.term.value, el.level.value);
+    setStatus(`${state.currentStudent} — đang làm bài`);
+    nextQuestion();
+  }
+
+  function parseVNDateTime(s){
+    if(!s) return 0;
+    const parts=s.split(" ");
+    const d=(parts[0]||"").split("/").map(Number);
+    const t=(parts[1]||"00:00:00").split(":").map(Number);
+    if(d.length<3) return 0;
+    return new Date(d[2], d[1]-1, d[0], t[0]||0, t[1]||0, t[2]||0).getTime();
+  }
+  function filteredAttempts(all){
+    const c = String(el.classSelect.value||"");
+    const ky = String(el.term.value||"");
+    // ✅ Lọc cùng Lớp + cùng Kỳ
+    return (all||[]).filter(x => String(x.className||"")===c && String(x.term||"")===ky);
+  }
+
+  function rankStats(rows){
+    return rows.sort((a,b)=>{
+      // 1) Điểm cao nhất ↓
+      if((b.best||0)!==(a.best||0)) return (b.best||0)-(a.best||0);
+      // 2) Thời gian làm bài nhanh hơn ↑
+      if((a.bestTime||1e15)!==(b.bestTime||1e15)) return (a.bestTime||1e15)-(b.bestTime||1e15);
+      // 3) Số lượt làm bài ít hơn ↑
+      if((a.attempts||0)!==(b.attempts||0)) return (a.attempts||0)-(b.attempts||0);
+      // 4) Tên A–Z
+      return String(a.student||"").localeCompare(String(b.student||""), "vi", {sensitivity:"base"});
+    });
+  }
+
+  function renderStats(){
+    let all=[];
+    try{ all=JSON.parse(localStorage.getItem(KEY_ATTEMPTS)||"[]"); }catch(e){ all=[]; }
+    const data=filteredAttempts(all);
+
+    // ✅ Fallback: nếu chưa có lịch sử ATTEMPTS (hoặc đã reset), vẫn hiển thị thống kê từ Bảng xếp hạng hiện tại
+    if(data.length===0){
+      const rankObj = loadRanking();
+      const rows = Object.entries(rankObj||{}).map(([student, rec])=>{
+        return {
+          student,
+          className: String(el.classSelect.value||""),
+          grade: String(el.grade.value||""),
+          term: String(el.term.value||""),
+          level: "",
+          best: Number(rec?.best||0),
+          sum: Number(rec?.best||0),
+          attempts: Number(rec?.attempts||0),
+          bestTime: "",
+          lastTime: ""
+        };
+      });
+      // sort (best desc, bestTime asc, attempts asc, name)
+      rankStats(rows);
+
+      el.stBody.innerHTML="";
+      rows.forEach((it,idx)=>{
+        const tr=document.createElement("tr");
+        tr.innerHTML = `<td>${idx+1}</td>
+          <td>${esc(it.student)}</td>
+          <td>${esc(it.className)}</td>
+          <td>${esc(it.grade)}</td>
+          <td>${esc(it.term)}</td>
+          <td></td>
+          <td>${it.attempts}</td>
+          <td>${it.best}</td>
+          <td>${(it.attempts? (it.sum/it.attempts):0).toFixed(1)}</td>
+          <td>${esc(it.lastTime||"")}</td>`;
+        el.stBody.appendChild(tr);
+      });
+
+      el.stSummary.textContent = `Tổng bản ghi: ${data.length} • Nhóm: ${rows.length}`;
+      return;
+    }
+
+    // ===== Gom theo (mức -> học sinh) =====
+    const levels = ["easy","medium","hard"];
+    const levelLabel = (lv)=> lv==="easy"?"Dễ":(lv==="medium"?"Trung bình":"Khó");
+
+    // map: level -> Map(student -> agg)
+    const bucket = new Map();
+    for(const lv of levels) bucket.set(lv, new Map());
+
+    data.forEach(a=>{
+      const lv = String(a.level||"");
+      if(!bucket.has(lv)) bucket.set(lv, new Map());
+      const m = bucket.get(lv);
+      const student = String(a.student||"");
+      if(!student) return;
+
+      const cur = m.get(student) || {
+        student,
+        className: String(a.className||""),
+        grade: String(a.grade||""),
+        term: String(a.term||""),
+        level: lv,
+        attempts: 0,
+        best: 0,
+        sum: 0,
+        bestTime: 1e18,
+        lastTime: ""
+      };
+      cur.attempts += 1;
+      const sc = Number(a.score||0);
+      cur.sum += sc;
+      if(sc > cur.best) cur.best = sc;
+
+      const t = Number(a.durationSec ?? a.durationSeconds ?? 1e18);
+      if(Number.isFinite(t) && t < cur.bestTime) cur.bestTime = t;
+
+      cur.lastTime = String(a.time||cur.lastTime||"");
+      m.set(student, cur);
+    });
+
+    el.stBody.innerHTML="";
+    let totalGroups = 0;
+
+    levels.forEach(lv=>{
+      const m = bucket.get(lv);
+      if(!m || m.size===0) return;
+
+      // header row for level
+      const trH = document.createElement("tr");
+      trH.className = "stLevelRow";
+      trH.innerHTML = `<td colspan="10">Mức: ${levelLabel(lv)}</td>`;
+      el.stBody.appendChild(trH);
+
+      const rows = [...m.values()].map(it=>({
+        ...it,
+        avg: it.attempts ? it.sum/it.attempts : 0,
+        bestTime: (it.bestTime>=1e17) ? "" : it.bestTime
+      }));
+
+      rankStats(rows);
+      totalGroups += rows.length;
+
+      rows.forEach((it,idx)=>{
+        const tr=document.createElement("tr");
+        tr.innerHTML = `<td>${idx+1}</td>
+          <td>${esc(it.student)}</td>
+          <td>${esc(it.className)}</td>
+          <td>${esc(it.grade)}</td>
+          <td>${esc(it.term)}</td>
+          <td>${esc(levelLabel(lv))}</td>
+          <td>${it.attempts}</td>
+          <td>${it.best}</td>
+          <td>${it.avg.toFixed(1)}</td>
+          <td>${esc(it.lastTime||"")}</td>`;
+        el.stBody.appendChild(tr);
+      });
+    });
+
+    el.stSummary.textContent = `Tổng bản ghi: ${data.length} • Nhóm: ${totalGroups}`;
+  }
+
+  function escapeCSV(v){
+    const s=String(v??"");
+    const t=s.replace(/"/g,'""');
+    return /[",;\n\r]/.test(t) ? `"${t}"` : t;
+  }
+  function downloadCSV(filename, csvText){
+    const BOM="\ufeff"; // ✅ để Excel nhận UTF-8
+    const blob=new Blob([BOM+csvText],{type:"text/csv;charset=utf-8"});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement("a");
+    a.href=url;
+    a.download=filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(()=>URL.revokeObjectURL(url),1500);
+  }
+
+  function exportStatsCSV(){
+    let all=[];
+    try{ all=JSON.parse(localStorage.getItem(KEY_ATTEMPTS)||"[]"); }catch(e){ all=[]; }
+    const data=filteredAttempts(all);
+
+    const map=new Map();
+    for(const x of data){
+      const student=String(x.student||"");
+      const className=String(x.className||"");
+      const term=String(x.term||"");
+      const key=`${student}|${className}|${term}`;
+      if(!map.has(key)){
+        map.set(key,{student,className,grade:String(x.grade||el.grade.value||""),term,best:0,sum:0,attempts:0,bestTime:1e15,lastTime:""});
+      }
+      const it=map.get(key);
+      it.attempts++;
+      const sc=Number(x.score)||0;
+      it.best=Math.max(it.best, sc);
+      it.sum+=sc;
+      const dur = Number(x.durationSeconds ?? x.duration ?? x.timeSec ?? x.seconds ?? NaN);
+      if(Number.isFinite(dur) && dur>0) it.bestTime=Math.min(it.bestTime, dur);
+      if(!it.lastTime || parseVNDateTime(x.time)>parseVNDateTime(it.lastTime)) it.lastTime = x.time;
+    }
+
+    const rows=[...map.values()].map(it=>({
+      ...it,
+      avg: it.attempts ? it.sum/it.attempts : 0,
+      bestTime: (it.bestTime>=1e14) ? "" : it.bestTime
+    }));
+
+    rankStats(rows);
+
+    const header=["Hang","HocSinh","Lop","Khoi","Ky","SoLuot","DiemCaoNhat","DiemTB","ThoiGianTotNhat_Giay","LanGanNhat"];
+    const lines=[header.join(";")];
+    rows.forEach((r,i)=>{
+      const line=[
+        i+1, r.student, r.className, r.grade, r.term,
+        r.attempts, r.best, r.avg.toFixed(1), r.bestTime, r.lastTime
+      ].map(escapeCSV).join(";");
+      lines.push(line);
+    });
+
+    const safeC=String(el.classSelect.value||"lop").replace(/[\\/:*?"<>|]/g,"-");
+    const safeK=String(el.term.value||"ky").replace(/[\\/:*?"<>|]/g,"-");
+    downloadCSV(`ThongKe_${safeC}_Ky${safeK}.csv`, lines.join("\r\n"));
+  }
+
+  function downloadXLS(filename, htmlContent){
+    const BOM="\uFEFF";
+    const blob = new Blob([BOM + htmlContent], {type:"application/vnd.ms-excel;charset=utf-8;"});
+    const url = URL.createObjectURL(blob);
+    const a=document.createElement("a");
+    a.href=url; a.download=filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  // ✅ Xuất XLS có viền (Excel/WPS mở ra có bảng "đóng khung")
+  function exportStatsXLS(){
+    let all=[];
+    try{ all=JSON.parse(localStorage.getItem(KEY_ATTEMPTS)||"[]"); }catch(e){ all=[]; }
+    const data=filteredAttempts(all);
+
+    const map=new Map();
+    for(const x of data){
+      const student=String(x.student||"");
+      const className=String(x.className||"");
+      const term=String(x.term||"");
+      const key=`${student}|${className}|${term}`;
+      if(!map.has(key)){
+        map.set(key,{student,className,grade:String(x.grade||""),term,best:0,sum:0,attempts:0,bestTime:1e15,lastTime:""});
+      }
+      const it=map.get(key);
+      const sc=Number(x.score||0);
+      it.attempts++;
+      it.sum += sc;
+      it.best = Math.max(it.best, sc);
+      const dur = Number(x.durationSec ?? x.durationSeconds ?? 0);
+      if(dur>0) it.bestTime = Math.min(it.bestTime, dur);
+      const t=String(x.time||x.submittedAt||"");
+      if(t) it.lastTime = t;
+    }
+
+    const rows=[...map.values()].map(r=>({
+      student:r.student,
+      className:r.className,
+      grade:r.grade,
+      term:r.term,
+      attempts:r.attempts,
+      best:r.best,
+      avg: r.attempts ? (r.sum/r.attempts) : 0,
+      bestTime: (r.bestTime>=1e15? "" : r.bestTime),
+      lastTime: r.lastTime||""
+    }));
+
+    rankStats(rows);
+
+    const headers=["Hạng","Học Sinh","Lớp","Khối","Kỳ","Số lượt","Điểm cao nhất","Điểm TB","ThoiGianTotNhat_Giay","LanGanNhat"];
+
+    const escHtml = (s)=>String(s??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+
+    let table = `<table style="border-collapse:collapse; font-family:Calibri,Arial,sans-serif; font-size:11pt;">`;
+    const colN = headers.length;
+    const gradeTxt = (el.grade && el.grade.options[el.grade.selectedIndex]) ? el.grade.options[el.grade.selectedIndex].text : ("Khối " + (el.grade?.value||""));
+    const classTxt = (el.classSelect?.value || "");
+    const levelTxt = (el.level && el.level.options[el.level.selectedIndex]) ? el.level.options[el.level.selectedIndex].text : (el.level?.value||"");
+    const titleLines = [
+      "UBND xã Sính Phình",
+      "Trường PTDTBT TH Trung Thu",
+      "Bé giỏi toán 1 2 3",
+      `${gradeTxt}  •  Lớp ${classTxt}  •  Mức độ ${levelTxt}`
+    ];
+    titleLines.forEach((t,i)=>{
+      table += `<tr><td colspan="${colN}" style="border:1px solid #111827; font-weight:${i===2?900:700}; text-align:center; padding:6px;">${escHtml(t)}</td></tr>`;
+    });
+    table += `<tr><td colspan="${colN}" style="border:1px solid #111827; height:10px;"></td></tr>`;
+    table += `<tr>` + headers.map(h=>`<th style="border:1px solid #000; padding:6px; background:#f1f5f9; font-weight:700;">${escHtml(h)}</th>`).join("") + `</tr>`;
+    rows.forEach((r,i)=>{
+      const line=[
+        i+1, r.student, r.className, r.grade, r.term,
+        r.attempts, r.best, r.avg.toFixed(1), r.bestTime, r.lastTime
+      ];
+      table += `<tr>` + line.map(v=>`<td style="border:1px solid #000; padding:6px; white-space:nowrap;">${escHtml(v)}</td>`).join("") + `</tr>`;
+    });
+    table += `</table>`;
+
+    const safeC=String(el.classSelect.value||"lop").replace(/[\\/:*?"<>|]/g,"-");
+    const safeK=String(el.term.value||"ky").replace(/[\\/:*?"<>|]/g,"-");
+
+    const htmlDoc = `<!doctype html><html><head><meta charset="utf-8"></head><body>${table}</body></html>`;
+    downloadXLS(`ThongKe_${safeC}_Ky${safeK}.xls`, htmlDoc);
+  }
+
+
+  function downloadWord(filename, html){
+    const blob=new Blob([html], {type:"application/msword;charset=utf-8"});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement("a");
+    a.href=url;
+    a.download = (filename.endsWith(".doc")? filename : filename+".doc");
+    a.click();
+    setTimeout(()=>URL.revokeObjectURL(url),1500);
+  }
+  function buildWordDoc({mcq, essay, word, showAnswers}){
+    const student = state.currentStudent || "";
+    const cls = el.classSelect.value || "";
+    const grade = el.grade.value || "";
+    const term = el.term.value || "";
+    const level = lvText(el.level.value||"easy");
+    const today = new Date().toLocaleDateString("vi-VN");
+
+    const mcqHtml = mcq.map((q,i)=>{
+      const opts = q.choices.map((c,idx)=>`<span style="display:inline-block;width:24px;font-weight:700;">${String.fromCharCode(65+idx)}.</span> ${esc(c)}`).join("<br/>");
+      const ans = showAnswers ? `<div style="margin-top:3px;"><i>Đáp án: ${esc(q.answer)}</i></div>` : "";
+      return `<div style="margin:6px 0;"><b>Câu ${i+1}.</b> ${esc(q.text)}<div style="margin-left:18px;margin-top:4px;">${opts}</div>${ans}</div>`;
+    }).join("");
+
+    const essayHtml = essay.map((q,i)=>{
+      const ans = showAnswers ? `<div style="margin-top:3px;"><i>Đáp án: ${esc(q.answer)}</i></div>` : "";
+      return `<div style="margin:10px 0;"><b>Bài ${i+1}.</b> ${esc(q.text)}${ans}</div>`;
+    }).join("");
+
+    const wordHtml = word.map((q,i)=>{
+      const ans = showAnswers ? `<div style="margin-top:3px;"><i>Đáp án: ${esc(q.answer)}</i></div>` : "";
+      return `<div style="margin:10px 0;"><b>Bài ${i+1}.</b> ${esc(q.text)}${ans}</div>`;
+    }).join("");
+
+    const css = `
+      @page Section1{ size:A4; margin:2cm 2cm 2cm 2cm; }
+      div.Section1{ page:Section1; }
+      body{ font-family:"Times New Roman"; font-size:14pt; line-height:1.35; }
+      .center{text-align:center;}
+      .fieldRow{ margin-top:10px; }
+      .fieldRow span{ display:inline-block; min-width:240px; }
+      .title{ font-size:18pt; font-weight:700; }
+      .part{ margin-top:14px; font-weight:700; }
+    `;
+    const footer = `
+      <div style="mso-element:footer" id="f1">
+        <p class="MsoFooter" style="text-align:center">
+          Trang <span style='mso-field-code:" PAGE "'></span> / <span style='mso-field-code:" NUMPAGES "'></span>
+        </p>
+      </div>`;
+
+    return `<!doctype html>
+<html>
+<head><meta charset="utf-8"><style>${css}
+/* ===== NỀN PHONG CẢNH + MÂY TRÔI (v11) ===== */
+#bgSky{
+  position:fixed; inset:0;
+  background:
+    radial-gradient(circle at 20% 10%, rgba(255,255,255,.85), rgba(255,255,255,0) 42%),
+    radial-gradient(circle at 80% 18%, rgba(255,255,255,.75), rgba(255,255,255,0) 45%),
+    url("data:image/jpeg;base64,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") no-repeat center center;
+  background-size:auto, auto, cover;
+  filter:saturate(1.05) contrast(1.02);
+  z-index:-3;
+}
+#cloudLayer{
+  position:fixed; inset:-60px;
+  pointer-events:none;
+  z-index:-2;
+  opacity:.55;
+  background:
+    radial-gradient(circle at 10% 40%, rgba(255,255,255,.75), rgba(255,255,255,0) 55%),
+    radial-gradient(circle at 40% 30%, rgba(255,255,255,.65), rgba(255,255,255,0) 60%),
+    radial-gradient(circle at 70% 45%, rgba(255,255,255,.7), rgba(255,255,255,0) 58%),
+    radial-gradient(circle at 90% 35%, rgba(255,255,255,.6), rgba(255,255,255,0) 60%);
+  animation: cloudsMove 38s linear infinite;
+}
+@keyframes cloudsMove{
+  0%{ transform:translateX(-6%); }
+  100%{ transform:translateX(6%); }
+}
+/* tăng tương phản khung nội dung để nổi trên nền */
+.wrap{ position:relative; }
+.header,.controls,.left,.center,.right,.footer{ backdrop-filter: none; -webkit-backdrop-filter:none; }
+
+
+/* ===== CONFETTI (v11) ===== */
+#confettiCanvas{
+  position:fixed; inset:0;
+  pointer-events:none;
+  z-index:9999;
+  display:none;
+}
+#winToast{
+  position:fixed;
+  left:50%; top:18%;
+  transform:translateX(-50%);
+  background:rgba(255,255,255,.92);
+  border:4px solid #166534;
+  border-radius:16px;
+  padding:14px 18px;
+  font-weight:1000;
+  color:#052e16;
+  box-shadow:0 18px 40px rgba(0,0,0,.25);
+  z-index:10000;
+  display:none;
+  text-align:center;
+  min-width:min(520px,92vw);
+}
+#winToast .big{font-size:22px; color:#b91c1c; text-shadow:0 1px 0 #fff;}
+#winToast .sub{margin-top:6px; font-size:14px; color:#14532d;}
+
+
+
+
+
+
+</style></head>
+<body>${footer}
+<div class="Section1">
+  <div class="center title">Kiểm Tra Toán</div>
+  <div class="fieldRow">
+    <span>Tên học sinh:.............</span>
+    <span>Lớp:.........................</span>
+  </div>
+  <div class="fieldRow">
+    <span>Khối:...........................</span>
+    <span>Mức:................</span>
+    <span>Điểm.............</span>
+  </div>
+  <div class="fieldRow"><b>Thông tin đề:</b> ${esc(student)} • ${esc(cls)} • Khối ${esc(grade)} • Kỳ ${esc(term)} • Mức ${esc(level)} • Ngày ${esc(today)}</div>
+  <div class="part">PHẦN I. TRẮC NGHIỆM</div>
+  ${mcqHtml}
+  <div class="part">PHẦN II. TỰ LUẬN</div>
+  ${essayHtml}
+  <div class="part">PHẦN III. BÀI TOÁN CÓ LỜI VĂN</div>
+  ${wordHtml}
+</div>
+
+<canvas id="confettiCanvas"></canvas>
+<div id="winToast">
+  <div class="big" id="winTitle">🎉 Chúc mừng!</div>
+  <div class="sub" id="winSub">Hoàn thành bài thi.</div>
+</div>
+
+</body></html>`;
+  }
+
+  
+// ===================== CURRICULUM HELPERS (UPDATED) =====================
+
+// L1 HKI: separate add/sub within 10
+function l1_add10(level){
+  const a=randInt(0,10);
+  const b=randInt(0,10-a);
+  const ans=a+b;
+  return mkQ(`${a} + ${b} = ?`, ans, nearNumber(ans, 3, 4), "Cộng trong 10");
+}
+function l1_sub10(level){
+  const a=randInt(0,10);
+  const b=randInt(0,a);
+  const ans=a-b;
+  return mkQ(`${a} − ${b} = ?`, ans, nearNumber(ans, 3, 4), "Trừ trong 10");
+}
+function l1_compare100(level){
+  const a=randInt(0,100), b=randInt(0,100);
+  const sign=a>b?">":(a<b?"<":"=");
+  return mkQ(`So sánh: ${a} ☐ ${b}`, sign, [">","<","="], "So sánh phạm vi 100");
+}
+function l1_add100_nocarry(level){
+  // ensure no carry in ones
+  const max=(level==="easy")?50:(level==="medium"?80:100);
+  let a=randInt(10,max), b=randInt(10,max);
+  if((a%10)+(b%10) >= 10){
+    b = b - (((a%10)+(b%10))-9);
+    if(b<10) b=10;
+  }
+  if(a+b>100){ a=Math.max(10,a-20); b=Math.max(10,100-a); }
+  const ans=a+b;
+  return mkQ(`${a} + ${b} = ?`, ans, nearNumber(ans, 10, 4), "Cộng không nhớ (≤100)");
+}
+function l1_sub100_noborrow(level){
+  const max=(level==="easy")?50:(level==="medium"?80:100);
+  let a=randInt(20,max), b=randInt(10,a-1);
+  if((a%10) < (b%10)){
+    b = b - ((b%10)-(a%10));
+    if(b<10) b=10;
+  }
+  const ans=a-b;
+  return mkQ(`${a} − ${b} = ?`, ans, nearNumber(ans, 10, 4), "Trừ không mượn (≤100)");
+}
+
+// L2 HKI helpers
+function l2_add_100(level){
+  let a=randInt(20,100), b=randInt(0,100);
+  if(a+b>100) b=100-a;
+  const ans=a+b;
+  return mkQ(`${a} + ${b} = ?`, ans, nearNumber(ans, 10, 4), "Cộng (20–100)");
+}
+function l2_sub_100(level){
+  let a=randInt(20,100), b=randInt(0,a);
+  const ans=a-b;
+  return mkQ(`${a} − ${b} = ?`, ans, nearNumber(ans, 10, 4), "Trừ (20–100)");
+}
+function l2_compare_100(level){
+  const a=randInt(20,100), b=randInt(20,100);
+  const sign=a>b?">":(a<b?"<":"=");
+  return mkQ(`So sánh: ${a} ☐ ${b}`, sign, [">","<","="], "So sánh (≤100)");
+}
+function l2_add3_with_1digit_100(level){
+  const c=randInt(1,9);
+  let a=randInt(20,90), b=randInt(10,80);
+  if(a+b+c>100){ a=Math.max(20,a-20); b=Math.max(10,100-a-c); }
+  const ans=a+b+c;
+  return mkQ(`${a} + ${b} + ${c} = ?`, ans, nearNumber(ans, 12, 4), "Cộng 3 số (1 chữ số)");
+}
+function l2_sub3_with_1digit_100(level){
+  // (a + c) - b or a - b + c within 0..100
+  let a=randInt(40,100), b=randInt(10,60), c=randInt(1,9);
+  let ans=a-b+c;
+  if(ans<0){ a+=20; ans=a-b+c; }
+  if(ans>100){ a=Math.max(40,a-20); ans=a-b+c; }
+  return mkQ(`${a} − ${b} + ${c} = ?`, ans, nearNumber(ans, 12, 4), "Biểu thức 3 số (1 chữ số)");
+}
+
+// L2 HKII helpers
+function l2_muldiv_2_5(level, mode){
+  const table=(Math.random()<0.5)?2:5;
+  if(mode==="mul"){
+    const x=(level==="easy")?randInt(0,5):(level==="medium"?randInt(0,7):randInt(0,10));
+    const ans=table*x;
+    return mkQ(`${table} × ${x} = ?`, ans, nearNumber(ans, 6, 4), "Nhân bảng 2,5");
+  }else{
+    const div=exactDivision(table, table, 1, (level==="hard")?10:8);
+    return mkQ(`${div.dividend} ÷ ${div.divisor} = ?`, div.quotient, nearNumber(div.quotient, 3, 4), "Chia bảng 2,5");
+  }
+}
+function l2_add_1000_carry1(level){
+  let a=randInt(100,900), b=randInt(100,900);
+  if(a+b>1000){ a=Math.max(100,a-200); b=Math.max(100,1000-a); }
+  // force at least one carry in ones for medium/hard
+  if(level!=="easy" && (a%10)+(b%10)<10) b=Math.min(999,b+10);
+  const ans=a+b;
+  return mkQ(`${a} + ${b} = ?`, ans, nearNumber(ans, 60, 4), "Cộng (≤1000, nhớ 1 lần)");
+}
+function l2_sub_1000_borrow1(level){
+  let a=randInt(200,1000), b=randInt(100,a);
+  const ans=a-b;
+  return mkQ(`${a} − ${b} = ?`, ans, nearNumber(ans, 60, 4), "Trừ (≤1000)");
+}
+function l2_compare_1000(level){
+  const a=randInt(0,1000), b=randInt(0,1000);
+  const sign=a>b?">":(a<b?"<":"=");
+  return mkQ(`So sánh: ${a} ☐ ${b}`, sign, [">","<","="], "So sánh (≤1000)");
+}
+function l2_add3_with_2digit_1000(level){
+  const c=randInt(10,99);
+  let a=randInt(200,900), b=randInt(100,800);
+  if(a+b+c>1000){ a=Math.max(200,a-200); b=Math.max(100,1000-a-c); }
+  const ans=a+b+c;
+  return mkQ(`${a} + ${b} + ${c} = ?`, ans, nearNumber(ans, 80, 4), "Cộng 3 số (1 số 2 chữ số)");
+}
+function l2_sub3_with_2digit_1000(level){
+  const c=randInt(10,99);
+  let a=randInt(300,1000), b=randInt(100,800);
+  let ans=a-b+c;
+  if(ans<0){ a+=200; ans=a-b+c; }
+  if(ans>1000){ a=Math.max(300,a-200); ans=a-b+c; }
+  return mkQ(`${a} − ${b} + ${c} = ?`, ans, nearNumber(ans, 80, 4), "Biểu thức 3 số (1 số 2 chữ số)");
+}
+
+// L3 HKI helpers
+function l3_tables_1_9(level, mode){
+  const table=randInt(1,9);
+  if(mode==="mul"){
+    const x=(level==="easy")?randInt(0,8):(level==="medium"?randInt(0,9):randInt(0,10));
+    const ans=table*x;
+    return mkQ(`${table} × ${x} = ?`, ans, nearNumber(ans, 12, 4), "Bảng nhân 1–9");
+  }else{
+    const div=exactDivision(table, table, 1, (level==="hard")?10:9);
+    return mkQ(`${div.dividend} ÷ ${div.divisor} = ?`, div.quotient, nearNumber(div.quotient, 4, 4), "Bảng chia 1–9");
+  }
+}
+function l3_compare_1000(level){
+  const a=randInt(0,1000), b=randInt(0,1000);
+  const sign=a>b?">":(a<b?"<":"=");
+  return mkQ(`So sánh: ${a} ☐ ${b}`, sign, [">","<","="], "So sánh (≤1000)");
+}
+function l3_add_1000_carry2(level){
+  let a=randInt(100,900), b=randInt(100,900);
+  if(a+b>1000){ a=Math.max(100,a-300); b=Math.max(100,1000-a); }
+  const ans=a+b;
+  return mkQ(`${a} + ${b} = ?`, ans, nearNumber(ans, 80, 4), "Cộng (≤1000, nhớ)");
+}
+function l3_sub_1000_borrow2(level){
+  let a=randInt(200,1000), b=randInt(100,a);
+  const ans=a-b;
+  return mkQ(`${a} − ${b} = ?`, ans, nearNumber(ans, 80, 4), "Trừ (≤1000, mượn)");
+}
+function l3_mul_2d_1d(level){
+  const a=randInt(10,99), b=randInt(2,9);
+  const ans=a*b;
+  return mkQ(`${a} × ${b} = ?`, ans, nearNumber(ans, 40, 4), "Nhân (2 chữ số × 1 chữ số)");
+}
+function l3_div_2d_1d(level){
+  const d=randInt(2,9), q=randInt(2, (level==="hard")?20:12);
+  const dividend=d*q; // exact
+  return mkQ(`${dividend} ÷ ${d} = ?`, q, nearNumber(q, 6, 4), "Chia (2 chữ số ÷ 1 chữ số)");
+}
+function l3_mul_3d_1d(level){
+  let a=randInt(100,999), b=randInt(2,9);
+  if(a*b>1000) a=Math.floor(1000/b)-randInt(0,20);
+  const ans=a*b;
+  return mkQ(`${a} × ${b} = ?`, ans, nearNumber(ans, 90, 4), "Nhân (3 chữ số × 1 chữ số)");
+}
+function l3_div_3d_1d(level){
+  const d=randInt(2,9);
+  const q=randInt(20, (level==="hard")?120:90);
+  const dividend=d*q;
+  if(dividend>999) return l3_div_2d_1d(level);
+  return mkQ(`${dividend} ÷ ${d} = ?`, q, nearNumber(q, 20, 4), "Chia (3 chữ số ÷ 1 chữ số)");
+}
+function l3_expr_1000_mix(level){
+  // Biểu thức (≤1000): (a ± b) × c hoặc (a ± b) ÷ c
+  // ✅ Khi chia: luôn CHIA HẾT và biểu thức HIỂN THỊ khớp đáp án
+  // ✅ Không tạo kết quả > 1000
+  const c = randInt(2,9);              // 1 chữ số
+  const op = (Math.random() < 0.5) ? "+" : "−";
+  const useMul = Math.random() < 0.6;  // thiên về nhân
+
+  // helper tạo (a op b) = inner
+  function makeAB(inner){
+    if(op === "+"){
+      const b = randInt(0, inner);
+      const a = inner - b;
+      return [a,b];
+    }else{
+      // a − b = inner  => a = b + inner
+      const bMax = Math.max(0, Math.min(400, 999 - inner)); // giữ a không quá lớn
+      const b = randInt(0, bMax);
+      const a = b + inner;
+      return [a,b];
+    }
+  }
+
+  if(useMul){
+    const innerMax = Math.max(10, Math.floor(1000 / c));
+    const inner = randInt(10, innerMax);
+    const [a,b] = makeAB(inner);
+    const ans = inner * c;
+    return mkQ(`( ${a} ${op} ${b} ) × ${c} = ?`, ans, nearNumber(ans, 90, 4), "Biểu thức (≤1000)");
+  }else{
+    // CHIA HẾT: inner = q*c
+    const qMax = Math.max(5, Math.floor(1000 / c));
+    const q = randInt(2, qMax);
+    const inner = q * c;
+    const [a,b] = makeAB(inner);
+    return mkQ(`( ${a} ${op} ${b} ) ÷ ${c} = ?`, q, nearNumber(q, 20, 4), "Biểu thức (≤1000, chia hết)");
+  }
+}
+
+// L3 HKII helpers
+function l3_compare_100000(level){
+  const a=randInt(0,100000), b=randInt(0,100000);
+  const sign=a>b?">":(a<b?"<":"=");
+  return mkQ(`So sánh: ${a} ☐ ${b}`, sign, [">","<","="], "So sánh (≤100000)");
+}
+function l3_add_100000(level){
+  let a=randInt(1000,90000), b=randInt(1000,90000);
+  if(a+b>100000){ a=Math.max(1000,a-20000); b=Math.max(1000,100000-a); }
+  const ans=a+b;
+  return mkQ(`${a} + ${b} = ?`, ans, nearNumber(ans, 6000, 4), "Cộng (≤100000)");
+}
+function l3_sub_100000(level){
+  let a=randInt(1000,100000), b=randInt(0,a);
+  const ans=a-b;
+  return mkQ(`${a} − ${b} = ?`, ans, nearNumber(ans, 6000, 4), "Trừ (≤100000)");
+}
+function l3_mul_3to5d_1d(level){
+  const d=randInt(2,9);
+  let a=randInt(100,99999);
+  if(a*d>100000) a=Math.floor(100000/d)-randInt(0,200);
+  const ans=a*d;
+  return mkQ(`${a} × ${d} = ?`, ans, nearNumber(ans, 9000, 4), "Nhân (3–5 chữ số × 1 chữ số)");
+}
+function l3_div_3to5d_1d(level){
+  const d=randInt(2,9);
+  const q=randInt(100, Math.floor(100000/d));
+  const dividend=q*d;
+  return mkQ(`${dividend} ÷ ${d} = ?`, q, nearNumber(q, 900, 4), "Chia (3–5 chữ số ÷ 1 chữ số)");
+}
+function l3_round_10_100(level){
+  const n=randInt(100,99999);
+  const to = Math.random()<0.5 ? 10 : 100;
+  const rounded = Math.round(n/to)*to;
+  const choices = new Set([String(rounded), String(Math.floor(n/to)*to), String(Math.ceil(n/to)*to), String(rounded+to)]);
+  const opts = shuffle([...choices]).slice(0,4);
+  return mkQ(`Làm tròn số ${n} đến hàng ${to===10?"chục":"trăm"}:`, String(rounded), opts, "Làm tròn");
+}
+function toRoman(num){
+  const map=[["M",1000],["CM",900],["D",500],["CD",400],["C",100],["XC",90],["L",50],["XL",40],["X",10],["IX",9],["V",5],["IV",4],["I",1]];
+  let n=num, out="";
+  for(const [s,v] of map){
+    while(n>=v){ out+=s; n-=v; }
+  }
+  return out;
+}
+function l3_roman_unique(level){
+  const n = randInt(1,39); // tiểu học thường trong khoảng nhỏ
+  const ans = toRoman(n);
+  const set=new Set([ans]);
+  while(set.size<4){
+    const m=randInt(1,39);
+    set.add(toRoman(m));
+  }
+  const choices=shuffle([...set]);
+  return mkQ(`Viết số La Mã của ${n} là:`, ans, choices, "Số La Mã");
+}
+
+function wordProblem(){
+    const g = Number(el.grade.value), t = Number(el.term.value);
+
+    // helpers để tạo phép cộng/trừ không nhớ/không mượn (phù hợp lớp 1 HKII)
+    function addNoCarry(max){
+      let a = randInt(10, max), b = randInt(1, max);
+      // chỉnh để không nhớ ở hàng đơn vị
+      const ua=a%10, ub=b%10;
+      if(ua+ub>=10){
+        b = b - ((ua+ub)-9);
+        if(b<1) b=1;
+      }
+      if(a+b>max){
+        a = Math.max(10, a-10);
+        b = Math.min(b, max-a);
+      }
+      return [a,b,a+b];
+    }
+    function subNoBorrow(max){
+      let a = randInt(20, max), b = randInt(1, a-1);
+      const ua=a%10, ub=b%10;
+      if(ua<ub){
+        b = b - (ub-ua);
+        if(b<1) b=1;
+      }
+      return [a,b,a-b];
+    }
+    function pick(list){ return list[randInt(0, list.length-1)]; }
+
+    // ===== LỚP 1 =====
+    if(g===1 && t===1){
+      // phạm vi 10: cộng/trừ đơn giản + so sánh (bài toán có lời chủ yếu cộng/trừ)
+      const kind = pick(["add","add","sub","sub","compare"]);
+      if(kind==="compare"){
+        const a=randInt(0,10), b=randInt(0,10);
+        return {text:`So sánh hai số ${a} và ${b}: số nào lớn hơn?`, answer: String(Math.max(a,b))};
+      }
+      if(kind==="add"){
+        const a=randInt(0,10), b=randInt(0,10-a);
+        const templates=[
+          `Bạn Lan có ${a} cái bút, được mẹ cho thêm ${b} cái bút. Hỏi Lan có tất cả bao nhiêu cái bút?`,
+          `Trong rổ có ${a} quả cam, bỏ thêm ${b} quả cam. Hỏi trong rổ có tất cả bao nhiêu quả cam?`,
+          `Bạn Nam có ${a} viên kẹo, bạn được cho thêm ${b} viên. Hỏi Nam có tất cả bao nhiêu viên kẹo?`,
+          `Có ${a} con chim đậu trên cành, bay đến thêm ${b} con. Hỏi có tất cả bao nhiêu con chim?`
+        ];
+        return {text: pick(templates), answer:String(a+b)};
+      }else{
+        const a=randInt(1,10), b=randInt(0,a);
+        const templates=[
+          `Có ${a} quả táo, ăn hết ${b} quả. Hỏi còn lại bao nhiêu quả táo?`,
+          `Bạn Minh có ${a} cái kẹo, cho bạn ${b} cái. Hỏi Minh còn lại bao nhiêu cái kẹo?`,
+          `Trong hộp có ${a} viên bi, lấy ra ${b} viên. Hỏi trong hộp còn lại bao nhiêu viên bi?`,
+          `Có ${a} bông hoa, tặng ${b} bông. Hỏi còn lại bao nhiêu bông hoa?`
+        ];
+        return {text: pick(templates), answer:String(a-b)};
+      }
+    }
+
+    if(g===1 && t===2){
+      // phạm vi 100: cộng/trừ không nhớ + độ dài + thời gian
+      const kind = pick(["add","sub","length","time","add","sub"]);
+      if(kind==="add"){
+        const [a,b,ans]=addNoCarry(100);
+        const templates=[
+          `Trong giỏ có ${a} quả xoài, mẹ cho thêm ${b} quả. Hỏi trong giỏ có tất cả bao nhiêu quả xoài?`,
+          `Bạn Hùng có ${a} que tính, bạn được phát thêm ${b} que. Hỏi Hùng có tất cả bao nhiêu que tính?`,
+          `Có ${a} bạn học sinh, thêm ${b} bạn đến. Hỏi có tất cả bao nhiêu bạn?`,
+          `Thư viện có ${a} quyển truyện, mua thêm ${b} quyển. Hỏi thư viện có tất cả bao nhiêu quyển truyện?`
+        ];
+        return {text: pick(templates), answer:String(ans)};
+      }
+      if(kind==="sub"){
+        const [a,b,ans]=subNoBorrow(100);
+        const templates=[
+          `Có ${a} quả chuối, đã ăn ${b} quả. Hỏi còn lại bao nhiêu quả chuối?`,
+          `Bạn Lan có ${a} nhãn vở, cho bạn ${b} nhãn. Hỏi Lan còn lại bao nhiêu nhãn vở?`,
+          `Trong lớp có ${a} bạn, có ${b} bạn nghỉ học. Hỏi lớp còn lại bao nhiêu bạn?`,
+          `Có ${a} chiếc kẹo, chia cho các bạn ${b} chiếc. Hỏi còn lại bao nhiêu chiếc kẹo?`
+        ];
+        return {text: pick(templates), answer:String(ans)};
+      }
+      if(kind==="length"){
+        const m=randInt(1,9), cm=randInt(0,99);
+        const total = m*100+cm;
+        const templates=[
+          `Một sợi dây dài ${m} m ${cm} cm. Hỏi sợi dây dài bao nhiêu xăng-ti-mét?`,
+          `Một đoạn thước dài ${m} m ${cm} cm. Đổi ra xăng-ti-mét được bao nhiêu?`,
+          `Một cuộn ruy băng dài ${m} m ${cm} cm. Hỏi dài bao nhiêu cm?`
+        ];
+        return {text: pick(templates), answer:String(total)};
+      }
+      // time
+      const h=randInt(1,12);
+      const templates=[
+        `Đồng hồ chỉ ${h} giờ đúng. Viết số giờ là bao nhiêu?`,
+        `Bây giờ là ${h}:00. Đọc giờ: ... giờ đúng.`,
+        `Kim giờ chỉ số ${h}, kim phút chỉ số 12. Hỏi mấy giờ?`
+      ];
+      return {text: pick(templates), answer:`${h} giờ`};
+    }
+
+    // ===== LỚP 2 =====
+    if(g===2 && t===1){
+      // 20-100 + khối lượng/dung tích + nhiều hơn/ít hơn
+      const kind = pick(["more","less","mass","capacity","addsub"]);
+      if(kind==="more"){
+        const a=randInt(20,80), d=randInt(5,20);
+        const templates=[
+          `Bạn Nam có ${a} viên bi. Bạn Minh có nhiều hơn Nam ${d} viên. Hỏi Minh có bao nhiêu viên bi?`,
+          `Lan có ${a} cái kẹo. Hà có nhiều hơn Lan ${d} cái kẹo. Hỏi Hà có bao nhiêu cái kẹo?`,
+          `Có ${a} quyển vở, mua thêm ${d} quyển. Hỏi có tất cả bao nhiêu quyển vở?`
+        ];
+        return {text: pick(templates), answer:String(a+d)};
+      }
+      if(kind==="less"){
+        const a=randInt(30,100), d=randInt(5,25);
+        const templates=[
+          `Bạn An có ${a} cái tem. Bạn Bình ít hơn An ${d} cái tem. Hỏi Bình có bao nhiêu cái tem?`,
+          `Có ${a} học sinh, lớp 2A ít hơn lớp 2B ${d} học sinh. Hỏi lớp 2A có bao nhiêu học sinh?`,
+          `Trong vườn có ${a} cây, vườn sau ít hơn vườn trước ${d} cây. Hỏi vườn sau có bao nhiêu cây?`
+        ];
+        return {text: pick(templates), answer:String(a-d)};
+      }
+      if(kind==="mass"){
+        const kg=randInt(1,9), g2=randInt(100,900);
+        const total = kg*1000+g2;
+        const templates=[
+          `Một túi gạo nặng ${total} g. Đổi ra kg và g là bao nhiêu?`,
+          `Một gói đường nặng ${total} g. Viết dưới dạng ... kg ... g.`,
+          `Một túi bột nặng ${total} g. Hỏi bằng bao nhiêu kg và g?`
+        ];
+        return {text: pick(templates), answer:`${kg} kg ${g2} g`};
+      }
+      if(kind==="capacity"){
+        const l=randInt(1,9), ml=randInt(100,900);
+        const total = l*1000+ml;
+        const templates=[
+          `Một bình nước có ${total} ml. Đổi ra lít và ml là bao nhiêu?`,
+          `Một can sữa có ${total} ml. Viết dưới dạng ... l ... ml.`,
+          `Một chai nước có ${total} ml. Hỏi bằng bao nhiêu lít và ml?`
+        ];
+        return {text: pick(templates), answer:`${l} l ${ml} ml`};
+      }
+      // add/sub <=100
+      const a=randInt(20,100), b=randInt(0,100);
+      if(Math.random()<0.5){
+        const bb = Math.min(b, 100-a);
+        return {text:`Tính: ${a} + ${bb} = ?`, answer:String(a+bb)};
+      }else{
+        const bb = randInt(0,a);
+        return {text:`Tính: ${a} − ${bb} = ?`, answer:String(a-bb)};
+      }
+    }
+
+    if(g===2 && t===2){
+      // bảng 2,5 + trong 1000 + độ dài + thống kê
+      const kind = pick(["len","stat","addsub","muldiv"]);
+      if(kind==="len"){
+        const m=randInt(1,9), cm=randInt(0,99);
+        return {text:`Một đoạn dây dài ${m} m ${cm} cm. Hỏi dài bao nhiêu cm?`, answer:String(m*100+cm)};
+      }
+      if(kind==="stat"){
+        const red=randInt(1,9), blue=randInt(1,9), yellow=randInt(1,9);
+        const total=red+blue+yellow;
+        const templates=[
+          `Hộp có ${red} bi đỏ, ${blue} bi xanh, ${yellow} bi vàng. Hỏi có tất cả bao nhiêu viên bi?`,
+          `Có ${red} bạn thích bóng đá, ${blue} bạn thích cầu lông, ${yellow} bạn thích bơi. Hỏi có tất cả bao nhiêu bạn?`,
+          `Một lớp có ${red} bạn đạt điểm 10, ${blue} bạn đạt điểm 9, ${yellow} bạn đạt điểm 8. Hỏi có bao nhiêu bạn được thống kê?`
+        ];
+        return {text: pick(templates), answer:String(total)};
+      }
+      if(kind==="muldiv"){
+        const table = (Math.random()<0.5)?2:5;
+        if(Math.random()<0.5){
+          const x=randInt(0,10);
+          return {text:`Tính: ${table} × ${x} = ?`, answer:String(table*x)};
+        }else{
+          const q=randInt(1,10);
+          return {text:`Tính: ${table*q} ÷ ${table} = ?`, answer:String(q)};
+        }
+      }
+      // add/sub <=1000 (có nhớ 1 lần)
+      const a=randInt(100,900), b=randInt(100,900);
+      if(Math.random()<0.5){
+        let aa=a, bb=b;
+        if(aa+bb>1000) bb = 1000-aa;
+        return {text:`Tính: ${aa} + ${bb} = ?`, answer:String(aa+bb)};
+      }else{
+        const aa=randInt(200,1000), bb=randInt(100,aa);
+        return {text:`Tính: ${aa} − ${bb} = ?`, answer:String(aa-bb)};
+      }
+    }
+
+    // ===== LỚP 3 =====
+    if(g===3 && t===1){
+      // phạm vi 1000 + bảng nhân chia + 2 bước
+      const kind = pick(["twostep","times","addsub"]);
+      if(kind==="times"){
+        const a=randInt(2,9), b=randInt(2,9);
+        return {text:`Một gói kẹo có ${a} chiếc. Có ${b} gói kẹo như thế. Hỏi có tất cả bao nhiêu chiếc kẹo?`, answer:String(a*b)};
+      }
+      if(kind==="twostep"){
+        const a=randInt(200,700), b=randInt(100,500), c=randInt(50,300);
+        if(a+b-c<0) return {text:`Kho có ${a} kg gạo, nhập thêm ${b} kg rồi bán ${c} kg. Hỏi kho còn lại bao nhiêu kg gạo?`, answer:String(a+b-c)};
+        const templates=[
+          `Cửa hàng có ${a} kg gạo, nhập thêm ${b} kg rồi bán ${c} kg. Hỏi cửa hàng còn lại bao nhiêu kg gạo?`,
+          `Thư viện có ${a} quyển sách, mua thêm ${b} quyển rồi cho mượn ${c} quyển. Hỏi thư viện còn lại bao nhiêu quyển sách?`,
+          `Trong kho có ${a} thùng hàng, nhập thêm ${b} thùng rồi xuất đi ${c} thùng. Hỏi còn lại bao nhiêu thùng hàng?`
+        ];
+        return {text: pick(templates), answer:String(a+b-c)};
+      }
+      // add/sub <=1000
+      const a=randInt(100,900), b=randInt(100,900);
+      if(Math.random()<0.5){
+        let aa=a, bb=b; if(aa+bb>1000) bb=1000-aa;
+        return {text:`Tính: ${aa} + ${bb} = ?`, answer:String(aa+bb)};
+      }else{
+        const aa=randInt(200,1000), bb=randInt(100,aa);
+        return {text:`Tính: ${aa} − ${bb} = ?`, answer:String(aa-bb)};
+      }
+    }
+
+    // g===3 && t===2
+    const kind = pick(["perimeter","area","round","twostep"]);
+    if(kind==="perimeter"){
+      const a=randInt(10,60), b=randInt(10,60);
+      const templates=[
+        `Một hình chữ nhật có chiều dài ${a} cm, chiều rộng ${b} cm. Tính chu vi hình chữ nhật.`,
+        `Một mảnh vườn hình chữ nhật dài ${a} m, rộng ${b} m. Hỏi chu vi mảnh vườn là bao nhiêu mét?`
+      ];
+      return {text: pick(templates), answer:String(2*(a+b))};
+    }
+    if(kind==="area"){
+      const a=randInt(5,40), b=randInt(5,40);
+      const templates=[
+        `Một hình chữ nhật có chiều dài ${a} cm, chiều rộng ${b} cm. Tính diện tích hình chữ nhật.`,
+        `Một tấm bìa hình chữ nhật dài ${a} dm, rộng ${b} dm. Hỏi diện tích tấm bìa là bao nhiêu dm²?`
+      ];
+      return {text: pick(templates), answer:String(a*b)};
+    }
+    if(kind==="round"){
+      const n=randInt(1000,99999);
+      const to = (Math.random()<0.5)?10:100;
+      const rounded = Math.round(n/to)*to;
+      return {text:`Làm tròn số ${n} đến hàng ${to===10?"chục":"trăm"} được:`, answer:String(rounded)};
+    }
+    // twostep within 100000
+    let a=randInt(10000,80000), b=randInt(1000,20000), c=randInt(1000,20000);
+    if(a+b-c<0){ a=50000; b=10000; c=5000; }
+    const templates=[
+      `Một cửa hàng có ${a} kg gạo, nhập thêm ${b} kg rồi bán ${c} kg. Hỏi cửa hàng còn lại bao nhiêu kg gạo?`,
+      `Kho có ${a} thùng hàng, nhập thêm ${b} thùng rồi xuất đi ${c} thùng. Hỏi còn lại bao nhiêu thùng hàng?`
+    ];
+    return {text: pick(templates), answer:String(a+b-c)};
+  }
+
+  
+function exportWord(){
+  if(!state.currentStudent){ alert("⚠ Hãy chọn học sinh trước!"); return; }
+  const showAns = confirm("Xuất Word có kèm ĐÁP ÁN không?\n(OK = Có đáp án, Cancel = Không)");
+
+  const total = Number(el.modeCount.value||30);
+
+  // ===== ratio: 70% MCQ, 20% essay, 10% word problems =====
+  // exact examples: 10 -> 7/2/1 ; 30 -> 21/6/3
+  let nMcq = Math.round(total*0.70);
+  let nEssay = Math.round(total*0.20);
+  let nWord = total - nMcq - nEssay;
+
+  // normalize to exact targets for 10/30
+  if(total===10){ nMcq=7; nEssay=2; nWord=1; }
+  if(total===30){ nMcq=21; nEssay=6; nWord=3; }
+
+  const plan = buildPlan(total, el.grade.value, el.term.value, el.level.value);
+  const mcq=[], essay=[], word=[];
+
+  for(let i=0;i<nMcq;i++){
+    const kind = plan[i] || plan[0] || "add";
+    const q = generateByKind(kind);
+    mcq.push({text:q.text, answer:q.answer, choices:q.choices.slice(0,4)});
+  }
+  for(let i=0;i<nEssay;i++){
+    const kind = plan[nMcq+i] || plan[0] || "add";
+    const q = generateByKind(kind);
+    // tự luận: để chỗ trống
+    essay.push({text:`${q.text.replace(" = ?"," = …………")}`, answer:q.answer});
+  }
+  for(let i=0;i<nWord;i++){
+    word.push(wordProblem());
+  }
+
+  const html = buildWordDoc({mcq, essay, word, showAnswers:showAns});
+  downloadWord(`DeToan_${state.currentStudent}_${el.classSelect.value}`, html);
+}
+
+
+  function parsePasted(text){
+    const lines=String(text||"").split(/\r?\n/);
+    const out=[], seen=new Set();
+    for(const line of lines){
+      const raw=line.trim();
+      if(!raw) continue;
+      let first=raw;
+      if(raw.includes("\t")) first=raw.split("\t")[0];
+      else if(raw.includes(",")) first=raw.split(",")[0];
+      else if(raw.includes(";")) first=raw.split(";")[0];
+      first=String(first).trim();
+      if(!first) continue;
+      if(seen.has(first)) continue;
+      seen.add(first);
+      out.push(first);
+    }
+    return out;
+  }
+
+  const pass = { back:$("passBack"), input:$("passInput"), onOk:null };
+  function openPass(onOk){
+    pass.onOk=onOk;
+    pass.input.value="";
+    pass.back.style.display="flex";
+    setTimeout(()=>pass.input.focus(),0);
+  }
+  function closePass(){ pass.back.style.display="none"; }
+  $("btnPassCancel").addEventListener("click", closePass);
+  $("btnPassOk").addEventListener("click", ()=>{
+    if(pass.input.value===ADMIN_PASSWORD){
+      closePass();
+      if(typeof pass.onOk==="function") pass.onOk();
+    }else alert("Sai mật khẩu!");
+  });
+  pass.back.addEventListener("click", (e)=>{ if(e.target===pass.back) closePass(); });
+
+  const admin = { back:$("adminBack"), mGrade:$("mGrade"), mClass:$("mClass"), area:$("listArea"), newClass:$("newClass") };
+  function openAdmin(){
+    admin.mGrade.textContent=el.grade.value;
+    admin.mClass.textContent=el.classSelect.value;
+    const g=String(el.grade.value), c=String(el.classSelect.value);
+    admin.area.value=(STUDENTS[g]?.[c] || []).join("\n");
+    admin.newClass.value="";
+    admin.back.style.display="flex";
+  }
+  function closeAdmin(){ admin.back.style.display="none"; }
+  admin.back.addEventListener("click",(e)=>{ if(e.target===admin.back) closeAdmin(); });
+  $("btnAdminClose").addEventListener("click", closeAdmin);
+
+  $("btnSort").addEventListener("click", ()=>{
+    const list=parsePasted(admin.area.value);
+    list.sort((a,b)=>a.localeCompare(b,"vi",{sensitivity:"base"}));
+    admin.area.value=list.join("\n");
+  });
+  $("btnClean").addEventListener("click", ()=>{ admin.area.value=parsePasted(admin.area.value).join("\n"); });
+  $("btnImport").addEventListener("click", ()=>{
+    const list=parsePasted(admin.area.value);
+    admin.area.value=list.join("\n");
+    alert("✅ Import xong: "+list.length+" học sinh");
+  });
+  $("btnExport").addEventListener("click", ()=>{
+    const g=String(el.grade.value), c=String(el.classSelect.value);
+    const list=parsePasted(admin.area.value);
+    const csv="\ufeff"+"TenHocSinh\n"+list.map(x=>`"${String(x).replace(/"/g,'""')}"`).join("\n");
+    const blob=new Blob([csv],{type:"text/csv;charset=utf-8"});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement("a");
+    a.href=url; a.download=`danh_sach_${g}_${c}.csv`;
+    a.click();
+    setTimeout(()=>URL.revokeObjectURL(url),1500);
+  });
+  $("btnRestore").addEventListener("click", ()=>{
+    const g=String(el.grade.value), c=String(el.classSelect.value);
+    if(!confirm(`Khôi phục mặc định cho lớp ${c}?`)) return;
+    removeOverride(g,c);
+    const def = (STUDENTS_DEFAULT[g] && STUDENTS_DEFAULT[g][c]) ? STUDENTS_DEFAULT[g][c].slice() : [];
+    STUDENTS[g][c]=def;
+    admin.area.value=def.join("\n");
+    renderStudents();
+    alert("✅ Đã khôi phục mặc định");
+  });
+  $("btnAdminSave").addEventListener("click", ()=>{
+    const g=String(el.grade.value), c=String(el.classSelect.value);
+    const list=parsePasted(admin.area.value);
+    if(!STUDENTS[g]) STUDENTS[g]={};
+    STUDENTS[g][c]=list.slice();
+    saveOverride(g,c,list);
+    renderStudents();
+    alert("✅ Đã lưu danh sách lớp "+c);
+  });
+  $("btnAddClass").addEventListener("click", ()=>{
+    const g=String(el.grade.value);
+    const cls=(admin.newClass.value||"").trim();
+    if(!cls){ alert("Nhập tên lớp (vd: 2A5)"); return; }
+    if(!STUDENTS[g]) STUDENTS[g]={};
+    if(STUDENTS[g][cls]){ alert("Lớp đã tồn tại!"); return; }
+    STUDENTS[g][cls]=[];
+    saveCustomClass(g,cls);
+    fillClassOptions();
+    el.classSelect.value=cls;
+    state.currentClass=cls;
+    state.currentStudent="";
+    updateBadges();
+    renderStudents();
+    renderRanking();
+    admin.mClass.textContent=cls;
+    admin.area.value="";
+    alert("✅ Đã thêm lớp: "+cls);
+  });
+  $("btnDelClass").addEventListener("click", ()=>{
+    const g=String(el.grade.value), c=String(el.classSelect.value);
+    if(!confirm("Xóa lớp "+c+" ? (xóa cả xếp hạng lớp)")) return;
+
+    removeOverride(g,c);
+    removeCustomClass(g,c);
+    for(const ky of ["1","2"]){
+      for(const lv of ["easy","medium","hard"]){
+        localStorage.removeItem(`RANK_G${g}_C${c}_KY_${ky}_LV_${lv}`);
+      }
+    }
+    if(STUDENTS[g]) delete STUDENTS[g][c];
+
+    fillClassOptions();
+    state.currentClass=el.classSelect.value || "";
+    state.currentStudent="";
+    updateBadges();
+    renderStudents();
+    renderRanking();
+    setStatus("Chọn học sinh để bắt đầu");
+    closeAdmin();
+    alert("✅ Đã xóa lớp: "+c);
+  });
+
+  $("btnStart").addEventListener("click", startGame);
+  $("btnWord").addEventListener("click", exportWord);
+
+  $("btnStats").addEventListener("click", ()=>{
+    const show = (el.statsPanel.style.display!=="block");
+    el.statsPanel.style.display = show ? "block" : "none";
+    if(show) renderStats();
+  });
+  $("btnCloseStats").addEventListener("click", ()=>{ el.statsPanel.style.display="none"; });
+  $("btnExportStats").addEventListener("click", exportStatsXLS);
+  $("btnSheetUrl").addEventListener("click", setSheetUrl);
+  $("btnSheetPull").addEventListener("click", sheetPullAndMerge);
+  $("btnAutoSync").addEventListener("click", toggleAutoSync);
+  // ===== Đồng bộ nhiều máy (xuất/nhập JSON) =====
+  function downloadTextFile(filename, text, mime){
+    const blob = new Blob(["\uFEFF"+text], {type: (mime||"text/plain;charset=utf-8")});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href=url; a.download=filename;
+    document.body.appendChild(a); a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+  function exportSyncJSON(){
+    let attempts=[];
+    try{ attempts = JSON.parse(localStorage.getItem(KEY_ATTEMPTS)||"[]"); }catch(_){ attempts=[]; }
+    const payload = {
+      version: 1,
+      exportedAt: new Date().toISOString(),
+      className: String(el.classSelect.value||""),
+      term: String(el.term.value||""),
+      attempts: attempts,
+      ranking: (function(){ try{ return JSON.parse(localStorage.getItem(getRankKey())||"{}"); }catch(_){ return {}; } })()
+    };
+    const fname = `DongBo_${payload.className}_Ky${payload.term}.json`.replace(/[\\/:*?"<>|]/g,"-");
+    downloadTextFile(fname, JSON.stringify(payload, null, 2), "application/json;charset=utf-8");
+  }
+
+  function mergeAttempts(existing, incoming){
+    const seen = new Set();
+    const out = [];
+    for(const x of (existing||[])){
+      const key = String(x.id||"") || [
+        x.time,x.student,x.className,x.term,x.score,x.total,x.durationSeconds
+      ].join("|");
+      if(seen.has(key)) continue;
+      seen.add(key); out.push(x);
+    }
+    for(const x of (incoming||[])){
+      const key = String(x.id||"") || [
+        x.time,x.student,x.className,x.term,x.score,x.total,x.durationSeconds
+      ].join("|");
+      if(seen.has(key)) continue;
+      seen.add(key);
+      out.push(x);
+    }
+    return out;
+  }
+
+  function importSyncJSON(file){
+    const reader = new FileReader();
+    reader.onload = ()=>{
+      try{
+        const payload = JSON.parse(String(reader.result||"{}"));
+        if(!payload || typeof payload!=="object") throw new Error("File JSON không hợp lệ");
+
+        // 1) merge attempts
+        let existing=[];
+        try{ existing = JSON.parse(localStorage.getItem(KEY_ATTEMPTS)||"[]"); }catch(_){ existing=[]; }
+        const merged = mergeAttempts(existing, payload.attempts||[]);
+        localStorage.setItem(KEY_ATTEMPTS, JSON.stringify(merged));
+
+        // 2) merge ranking (class+term hiện tại)
+        let curRank={};
+        try{ curRank = JSON.parse(localStorage.getItem(getRankKey())||"{}"); }catch(_){ curRank={}; }
+        const incRank = payload.ranking || {};
+        for(const [name, rec] of Object.entries(incRank)){
+          const a = curRank[name] || {best:0, attempts:0, bestTime:999999};
+          const b = rec || {};
+          // best
+          const bestA = Number(a.best||0), bestB = Number(b.best||0);
+          const timeA = Number(a.bestTime||999999), timeB = Number(b.bestTime||999999);
+          const attA  = Number(a.attempts||0), attB = Number(b.attempts||0);
+
+          const mergedRec = {best: bestA, bestTime: timeA, attempts: attA};
+          // attempts cộng dồn
+          mergedRec.attempts = attA + attB;
+
+          if(bestB > bestA){
+            mergedRec.best = bestB;
+            mergedRec.bestTime = timeB;
+          }else if(bestB === bestA){
+            mergedRec.best = bestA;
+            mergedRec.bestTime = Math.min(timeA, timeB);
+          }
+          curRank[name] = mergedRec;
+        }
+        localStorage.setItem(getRankKey(), JSON.stringify(curRank));
+
+        // refresh UI
+        try{ renderStatsPanel(); }catch(_){}
+        try{ renderRankingV2(); }catch(_){}
+        alert("✅ Đã nhập & gộp dữ liệu đồng bộ thành công!");
+      }catch(err){
+        alert("❌ Không nhập được: " + (err && err.message ? err.message : err));
+      }
+    };
+    reader.readAsText(file);
+  }
+
+  $("btnSyncExport")?.addEventListener("click", exportSyncJSON);
+  $("btnSyncImport")?.addEventListener("click", ()=>{ $("syncFileInput")?.click(); });
+  $("syncFileInput")?.addEventListener("change", (e)=>{
+    const f = e.target.files && e.target.files[0];
+    if(f) importSyncJSON(f);
+    e.target.value="";
+  });
+
+
+  $("btnAdmin").addEventListener("click", ()=>{ openPass(openAdmin); });
+
+  $("btnResetAll").addEventListener("click", ()=>{
+    if(!confirm("Xóa toàn bộ xếp hạng + thống kê trên máy này?\n(Lưu ý: nếu Auto Sync đang bật và Google Sheet còn dữ liệu, dữ liệu có thể được tải lại)")) return;
+
+    // 1) Dừng Auto Sync để tránh vừa reset xong lại tự kéo dữ liệu từ Sheet về
+    try{ stopAutoSync(); }catch(e){}
+    try{ setAutoSyncEnabled(false); }catch(e){}
+    try{ localStorage.removeItem(KEY_AUTO_SYNC_MS); }catch(e){}
+
+    // 2) Xóa hàng đợi sync (nếu có)
+    try{ localStorage.removeItem(KEY_PENDING_SHEET); }catch(e){}
+
+    // 3) Xóa toàn bộ key xếp hạng (cả dạng cũ và mới) + thống kê
+    try{
+      Object.keys(localStorage).forEach(k=>{
+        if(
+          k === KEY_ATTEMPTS ||
+          k.startsWith("RANK_") ||
+          k.startsWith("RANK_G") ||
+          k.startsWith("RANK_C")
+        ){
+          localStorage.removeItem(k);
+        }
+      });
+    }catch(e){
+      // fallback: cố gắng xóa trực tiếp
+      try{ localStorage.removeItem(KEY_ATTEMPTS); }catch(_){}
+    }
+
+    // 4) Vẽ lại UI
+    try{ renderRanking(); }catch(e){}
+    try{ if(el.statsPanel.style.display==="block") renderStats(); }catch(e){}
+    alert("✅ Đã reset dữ liệu (xếp hạng + thống kê) trên máy này");
+  });
+
+  el.grade.addEventListener("change", ()=>{
+    fillClassOptions();
+    state.currentStudent="";
+    renderStudents();
+    renderRanking();
+    setStatus("Chọn học sinh để bắt đầu");
+    $("qSub").textContent="";
+    $("qCount").textContent="";
+    $("qText").textContent="Chọn học sinh → Bắt đầu";
+    el.answers.innerHTML="";
+    stopTimer(); el.timer.textContent="⏱";
+  });
+  el.classSelect.addEventListener("change", ()=>{
+    state.currentClass=el.classSelect.value;
+    state.currentStudent="";
+    updateBadges();
+    renderStudents();
+    renderRanking();
+    setStatus("Chọn học sinh để bắt đầu");
+    $("qSub").textContent="";
+    $("qCount").textContent="";
+    $("qText").textContent="Chọn học sinh → Bắt đầu";
+    el.answers.innerHTML="";
+    stopTimer(); el.timer.textContent="⏱";
+  });
+  el.term.addEventListener("change", ()=>{ updateBadges(); renderRanking(); });
+  el.level.addEventListener("change", ()=>{ updateBadges(); renderRanking(); });
+  el.modeCount.addEventListener("change", ()=>{ updateBadges(); });
+
+  fillClassOptions();
+  renderStudents();
+  renderRanking();
+  updateBadges();
+  setStatus("Chọn học sinh để bắt đầu");
+
+  // ===== CONFETTI ENGINE (v11) =====
+  const conf = {
+    canvas: null, ctx: null, w: 0, h: 0,
+    parts: [], running: false, raf: 0, tEnd: 0
+  };
+  function confettiInit(){
+    if(conf.canvas) return;
+    conf.canvas = document.getElementById("confettiCanvas");
+    if(!conf.canvas) return;
+    conf.ctx = conf.canvas.getContext("2d");
+    function resize(){
+      conf.w = conf.canvas.width = window.innerWidth;
+      conf.h = conf.canvas.height = window.innerHeight;
+    }
+    window.addEventListener("resize", resize);
+    resize();
+  }
+  function confettiStart(ms=2600){
+    confettiInit();
+    if(!conf.canvas || !conf.ctx) return;
+    conf.canvas.style.display = "block";
+    conf.parts = [];
+    const colors = ["#ef4444","#f59e0b","#22c55e","#3b82f6","#a855f7","#14b8a6","#eab308","#fb7185"];
+    const N = 170;
+    for(let i=0;i<N;i++){
+      conf.parts.push({
+        x: Math.random()*conf.w,
+        y: -20 - Math.random()*conf.h*0.2,
+        vx: (Math.random()-0.5)*3.2,
+        vy: 2.0 + Math.random()*4.5,
+        r: 3 + Math.random()*5,
+        rot: Math.random()*Math.PI,
+        vr: (Math.random()-0.5)*0.2,
+        color: colors[i%colors.length],
+        shape: (i%3)
+      });
+    }
+    conf.running = true;
+    conf.tEnd = performance.now() + ms;
+    cancelAnimationFrame(conf.raf);
+    conf.raf = requestAnimationFrame(confettiTick);
+  }
+  function confettiStop(){
+    conf.running=false;
+    cancelAnimationFrame(conf.raf);
+    if(conf.canvas) conf.canvas.style.display="none";
+  }
+  function confettiTick(t){
+    if(!conf.running) return;
+    const ctx = conf.ctx;
+    ctx.clearRect(0,0,conf.w,conf.h);
+    for(const p of conf.parts){
+      p.x += p.vx;
+      p.y += p.vy;
+      p.rot += p.vr;
+      p.vy += 0.015; // gravity
+      if(p.y > conf.h+30){
+        p.y = -20; p.vy = 2.0 + Math.random()*4.5;
+        p.x = Math.random()*conf.w;
+      }
+      ctx.save();
+      ctx.translate(p.x,p.y);
+      ctx.rotate(p.rot);
+      ctx.fillStyle = p.color;
+      if(p.shape===0) ctx.fillRect(-p.r, -p.r, p.r*2, p.r*2);
+      else if(p.shape===1){ ctx.beginPath(); ctx.arc(0,0,p.r,0,Math.PI*2); ctx.fill(); }
+      else{
+        ctx.beginPath();
+        ctx.moveTo(-p.r, p.r);
+        ctx.lineTo(0, -p.r);
+        ctx.lineTo(p.r, p.r);
+        ctx.closePath(); ctx.fill();
+      }
+      ctx.restore();
+    }
+    if(t > conf.tEnd){
+      confettiStop();
+      return;
+    }
+    conf.raf = requestAnimationFrame(confettiTick);
+  }
+
+  function showWinToast(title, sub){
+    const box = document.getElementById("winToast");
+    const t = document.getElementById("winTitle");
+    const s = document.getElementById("winSub");
+    if(!box||!t||!s) return;
+    t.textContent = title;
+    s.textContent = sub;
+    box.style.display="block";
+    setTimeout(()=>{ box.style.display="none"; }, 3200);
+  }
+
+  // ===== Âm thanh + pháo hoa chúc mừng (kết thúc bài) =====
+  function playCongratsSound(){
+    if(!audioEnabled) return;
+    ensureAudio(); if(!audioCtx) return;
+    const seq = [523.25, 659.25, 783.99, 1046.5, 783.99, 1046.5]; // C5 E5 G5 C6...
+    let t = audioCtx.currentTime + 0.02;
+    seq.forEach((f)=>{
+      const o = audioCtx.createOscillator();
+      const g = audioCtx.createGain();
+      o.type = "sine";
+      o.frequency.value = f;
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(0.08, t + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + 0.20);
+      o.connect(g); g.connect(audioCtx.destination);
+      o.start(t); o.stop(t + 0.22);
+      t += 0.18;
+    });
+  }
+
+  const fw = { canvas:null, ctx:null, w:0, h:0, parts:[], raf:0, until:0, lastBurst:0 };
+  function fireworksInit(){
+    if(fw.canvas) return;
+    fw.canvas = document.createElement("canvas");
+    fw.canvas.id = "fwCanvas";
+    fw.canvas.style.cssText = "position:fixed;left:0;top:0;width:100vw;height:100vh;z-index:9998;pointer-events:none;display:none;";
+    document.body.appendChild(fw.canvas);
+    fw.ctx = fw.canvas.getContext("2d");
+    const resize = ()=>{
+      fw.w = fw.canvas.width = Math.floor(window.innerWidth * (window.devicePixelRatio||1));
+      fw.h = fw.canvas.height = Math.floor(window.innerHeight * (window.devicePixelRatio||1));
+      fw.ctx.setTransform(1,0,0,1,0,0);
+      fw.ctx.scale((window.devicePixelRatio||1),(window.devicePixelRatio||1));
+    };
+    window.addEventListener("resize", resize);
+    resize();
+  }
+  function addBurst(){
+    const x = 0.15*window.innerWidth + Math.random()*0.70*window.innerWidth;
+    const y = 0.15*window.innerHeight + Math.random()*0.35*window.innerHeight;
+    const n = 46 + Math.floor(Math.random()*28);
+    const colors = ["#ef4444","#f59e0b","#22c55e","#3b82f6","#a855f7","#14b8a6","#eab308","#fb7185"];
+    const col = colors[Math.floor(Math.random()*colors.length)];
+    for(let i=0;i<n;i++){
+      const a = (Math.PI*2) * (i/n) + (Math.random()-0.5)*0.25;
+      const sp = 2.2 + Math.random()*3.6;
+      fw.parts.push({
+        x,y, vx:Math.cos(a)*sp, vy:Math.sin(a)*sp,
+        life: 40 + Math.random()*18,
+        r: 2 + Math.random()*2.5,
+        color: col
+      });
+    }
+  }
+  function fireworksStart(ms=2400){
+    fireworksInit();
+    if(!fw.canvas || !fw.ctx) return;
+    fw.canvas.style.display = "block";
+    fw.until = performance.now() + ms;
+    fw.lastBurst = 0;
+    fw.parts = [];
+    cancelAnimationFrame(fw.raf);
+
+    const step = ()=>{
+      const now = performance.now();
+      const ctx = fw.ctx;
+      ctx.clearRect(0,0,window.innerWidth, window.innerHeight);
+
+      if(!fw.lastBurst || now - fw.lastBurst > 380){
+        fw.lastBurst = now;
+        addBurst();
+      }
+
+      // update
+      for(const p of fw.parts){
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vx *= 0.98;
+        p.vy = p.vy*0.98 + 0.06; // gravity
+        p.life -= 1;
+      }
+      fw.parts = fw.parts.filter(p=>p.life>0);
+
+      // draw
+      for(const p of fw.parts){
+        ctx.globalAlpha = Math.max(0, Math.min(1, p.life/45));
+        ctx.beginPath();
+        ctx.fillStyle = p.color;
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+
+      if(now < fw.until || fw.parts.length){
+        fw.raf = requestAnimationFrame(step);
+      }else{
+        fw.canvas.style.display = "none";
+      }
+    };
+    fw.raf = requestAnimationFrame(step);
+  }
+
+  function isTop1Now(rankObj, studentName){
+    const entries = Object.entries(rankObj||{})
+      .sort((a,b)=>(Number(b[1]||0)-Number(a[1]||0)) || a[0].localeCompare(b[0],"vi",{sensitivity:"base"}));
+    return entries.length>0 && entries[0][0]===studentName;
+  }
+
+
+/* ===================== PATCH V5.1 (Tổng thời gian + Quay lại/Tiếp theo + Xếp hạng tie-break) ===================== */
+(function(){
+  // --- 1) Tắt âm thanh đếm giờ từng giây (chỉ bỏ tick thời gian, vẫn giữ âm thanh đúng/sai nếu có) ---
+  try{ window.tickSound = function(){}; }catch(_){}
+
+  // --- 2) Tạo thanh điều hướng câu hỏi ---
+  function ensureNav(){
+    let nav = document.getElementById("navBar");
+    if(nav) return nav;
+    nav = document.createElement("div");
+    nav.id = "navBar";
+    nav.style.cssText = "display:flex;gap:12px;justify-content:center;align-items:center;margin-top:14px;flex-wrap:wrap;";
+    nav.innerHTML = `
+      <button id="btnPrevQ" class="smallBtn" type="button">⬅ Quay lại</button>
+      <button id="btnNextQ" class="smallBtn" type="button">Tiếp theo ➡</button>
+      <button id="btnSubmitQ" class="smallBtn" type="button" style="background:#16a34a;color:#fff;">✅ Nộp bài</button>
+    `;
+    // chèn sau khu vực đáp án
+    try{
+      if(el && el.answers && el.answers.parentNode){
+        el.answers.parentNode.appendChild(nav);
+      }else{
+        document.body.appendChild(nav);
+      }
+    }catch(_){
+      document.body.appendChild(nav);
+    }
+    return nav;
+  }
+
+  // --- 3) Đồng hồ tổng ---
+  function totalLimitSec(){
+    const q = Number(el.modeCount.value||10);
+    return (q===30)? (35*60) : (15*60);
+  }
+  function fmtMMSS(sec){
+    sec = Math.max(0, Math.floor(sec));
+    const m = Math.floor(sec/60);
+    const s = sec%60;
+    return `${m.toString().padStart(2,"0")}:${s.toString().padStart(2,"0")}`;
+  }
+  function stopTotalTimer(){
+    if(state.totalTimerId){ clearInterval(state.totalTimerId); state.totalTimerId=null; }
+  }
+  function startTotalTimer(){
+    stopTotalTimer();
+    state.totalLimit = totalLimitSec();
+    state.totalLeft = state.totalLimit;
+    state.totalStartTs = Date.now();
+    el.timer.textContent = "⏳ " + fmtMMSS(state.totalLeft);
+    state.totalTimerId = setInterval(()=>{
+      const used = Math.floor((Date.now()-state.totalStartTs)/1000);
+      state.totalLeft = Math.max(0, state.totalLimit - used);
+      el.timer.textContent = "⏳ " + fmtMMSS(state.totalLeft);
+      if(state.totalLeft<=0){
+        stopTotalTimer();
+        submitExam(true);
+      }
+    }, 250);
+  }
+
+  // --- 4) Sinh đề trước + cho phép quay lại/tiếp theo, sửa đáp án ---
+  function buildQuestions(total){
+    const out=[];
+    for(let i=0;i<total;i++){
+      const kind = state.plan[i] || "add";
+      const q = generateByKind(kind);
+      // đảm bảo choices là mảng string/number, không Set
+      const choices = Array.isArray(q.choices) ? q.choices.map(x=>String(x)) : [];
+      out.push({
+        text: String(q.text),
+        meta: q.meta ? String(q.meta) : "",
+        answer: String(q.answer),
+        choices
+      });
+    }
+    return out;
+  }
+
+  function renderQuestionAt(i){
+    state.qIndex = i;
+    const q = state.questions[i];
+    $("qSub").textContent = q.meta ? `Chủ đề: ${q.meta}` : "";
+    $("qCount").textContent = `Câu ${i+1}/${state.total}`;
+    $("qText").textContent = q.text;
+
+    el.answers.innerHTML = "";
+    q.choices.forEach((v, idx)=>{
+      const b = document.createElement("div");
+      b.className="ansBtn";
+      b.style.background = TILE[idx % TILE.length];
+      b.textContent = String(v);
+      // highlight selected
+      if(state.userAnswers[i] === String(v)){
+        b.style.outline = "4px solid #ef4444";
+        b.style.boxShadow = "0 0 0 6px rgba(239,68,68,.2)";
+      }
+      b.addEventListener("click", ()=>{
+        state.userAnswers[i] = String(v);
+        renderQuestionAt(i);
+      });
+      el.answers.appendChild(b);
+    });
+
+    const nav = ensureNav();
+    const prev = document.getElementById("btnPrevQ");
+    const next = document.getElementById("btnNextQ");
+    const sub  = document.getElementById("btnSubmitQ");
+    prev.disabled = (i<=0);
+    next.disabled = (i>=state.total-1);
+
+    prev.onclick = ()=>{ if(state.qIndex>0) renderQuestionAt(state.qIndex-1); };
+    next.onclick = ()=>{ if(state.qIndex<state.total-1) renderQuestionAt(state.qIndex+1); };
+    sub.onclick  = ()=> submitExam(false);
+  }
+
+  // --- 5) Nộp bài + lưu xếp hạng theo: điểm ↓, thời gian ↑, số lần ↑ ---
+  function getRankKey(){
+    const c=el.classSelect.value, ky=el.term.value;
+    return `RANK_C${c}_KY_${ky}`;
+  }
+
+  function loadRankV2(){
+    try{ return JSON.parse(localStorage.getItem(getRankKey())||"{}"); }catch(_){ return {}; }
+  }
+  function saveRankV2(obj){
+    try{ localStorage.setItem(getRankKey(), JSON.stringify(obj)); }catch(_){}
+  }
+
+  function sortRankingEntries(rankObj){
+    const arr = Object.entries(rankObj).map(([name, rec])=>{
+      const best = Number(rec.best||0);
+      const bestTime = Number(rec.bestTime||999999); // giây (nhỏ hơn tốt hơn)
+      const attempts = Number(rec.attempts||0);
+      return {name, best, bestTime, attempts};
+    });
+    arr.sort((a,b)=>{
+      if(b.best !== a.best) return b.best - a.best;
+      if(a.bestTime !== b.bestTime) return a.bestTime - b.bestTime;
+      if(a.attempts !== b.attempts) return a.attempts - b.attempts;
+      return a.name.localeCompare(b.name,"vi",{sensitivity:"base"});
+    });
+    return arr;
+  }
+
+  function renderRankingV2(){
+    const rank = loadRankV2();
+    const arr = sortRankingEntries(rank);
+    el.ranking.innerHTML = "";
+    if(arr.length===0){
+      el.ranking.innerHTML = `<div class="muted">Chưa có dữ liệu</div>`;
+      return;
+    }
+    arr.slice(0,20).forEach((r, i)=>{
+      const div=document.createElement("div");
+      div.className="rankItem";
+      const sc = `${r.best}`;
+      div.innerHTML = `<div class="name">${i+1}. ${esc(r.name)}</div><div class="score">${sc}</div>`;
+      el.ranking.appendChild(div);
+    });
+  }
+
+  function applause(){
+    try{
+      const ctx = new (window.AudioContext||window.webkitAudioContext)();
+      const o = ctx.createOscillator();
+      const g = ctx.createGain();
+      o.type="triangle";
+      o.frequency.value=220;
+      g.gain.value=0.0001;
+      o.connect(g); g.connect(ctx.destination);
+      o.start();
+      const t=ctx.currentTime;
+      g.gain.exponentialRampToValueAtTime(0.25, t+0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001, t+0.6);
+      o.stop(t+0.62);
+      setTimeout(()=>ctx.close&&ctx.close(), 900);
+    }catch(_){}
+  }
+
+  function messageByRank(rankPos){
+    if(rankPos===1) return "🏆 Chúc mừng bạn đã đạt hạng nhất!";
+    if(rankPos===2) return "🥈 Chúc mừng bạn đã đạt hạng nhì!";
+    if(rankPos===3) return "🥉 Chúc mừng bạn đã đạt hạng ba!";
+    if(rankPos>=4 && rankPos<=10) return "🎉 Chúc mừng đã hoàn thành phần chơi!";
+    if(rankPos>=11 && rankPos<=20) return "👏 Chúc mừng bạn, bạn đã rất cố gắng!";
+    return "💪 Bạn cần cố gắng hơn nữa!";
+  }
+
+  function submitExam(auto){
+    if(!state.inGame) return;
+    state.inGame=false;
+    stopTotalTimer();
+
+    const usedSec = Math.min(state.totalLimit, Math.max(0, state.totalLimit - state.totalLeft));
+    // tính điểm
+    let score=0;
+    for(let i=0;i<state.total;i++){
+      if(String(state.userAnswers[i]||"") === String(state.questions[i].answer)) score++;
+    }
+    state.score = score;
+
+    // lưu rank
+    const rank = loadRankV2();
+    const cur = rank[state.currentStudent] || {best:0, attempts:0, bestTime:999999};
+    cur.attempts = Number(cur.attempts||0) + 1;
+
+    const prevBest = Number(cur.best||0);
+    const prevBestTime = Number(cur.bestTime||999999);
+
+    if(score > prevBest){
+      cur.best = score;
+      cur.bestTime = usedSec;
+    }else if(score === prevBest){
+      cur.bestTime = Math.min(prevBestTime, usedSec);
+    }else{
+      cur.best = prevBest;
+      cur.bestTime = prevBestTime;
+    }
+    rank[state.currentStudent] = cur;
+    saveRankV2(rank);
+
+    
+
+    // ✅ GHI THỐNG KÊ (để Thống kê/CSV khớp với Bảng xếp hạng)
+    try{
+      if(typeof addAttempt === "function"){
+        addAttempt({
+          time: new Date().toLocaleString("vi-VN"),
+          student: state.currentStudent,
+          className: el.classSelect.value,
+          grade: el.grade.value,
+          term: el.term.value,
+          level: el.level.value,
+          count: el.modeCount.value,
+          score: score,
+          total: state.total,
+          durationSeconds: usedSec
+        });
+      }
+    }catch(_){}
+// hiển thị kết quả
+    $("qSub").textContent = "";
+    $("qCount").textContent="";
+    $("qText").textContent = `🎉 ${state.currentStudent} đạt ${score}/${state.total} điểm`;
+    el.answers.innerHTML = "";
+
+    // hiệu ứng + thông báo theo hạng
+    const arr = sortRankingEntries(rank);
+    const pos = arr.findIndex(x=>x.name===state.currentStudent) + 1;
+    const msg = messageByRank(pos);
+    setStatus(msg);
+
+    
+    // 🎉 Tung hoa + vỗ tay + thông báo lớn
+    try{ applause(); }catch(_){}
+    try{
+      if(pos===1) confettiStart(5200);
+      else if(pos<=3) confettiStart(3600);
+      else confettiStart(2200);
+    }catch(_){}
+    try{
+      const detail = `Điểm: ${score}/${state.total} • Thời gian: ${fmtMMSS(usedSec)} • Lớp ${el.classSelect.value} • Kỳ ${el.term.value} • ${lvText(el.level.value)} • ${el.modeCount.value} câu`;
+      const title = (pos===1) ? "🏆 CHÚC MỪNG BẠN ĐÃ ĐẠT HẠNG NHẤT!" :
+                    (pos===2) ? "🥈 CHÚC MỪNG BẠN ĐÃ ĐẠT HẠNG NHÌ!" :
+                    (pos===3) ? "🥉 CHÚC MỪNG BẠN ĐÃ ĐẠT HẠNG BA!" :
+                    (pos>=4 && pos<=10) ? "🎉 CHÚC MỪNG ĐÃ HOÀN THÀNH PHẦN CHƠI!" :
+                    (pos>=11 && pos<=20) ? "👏 CHÚC MỪNG BẠN, BẠN ĐÃ RẤT CỐ GẮNG!" :
+                    "💪 BẠN CẦN CỐ GẮNG HƠN NỮA!";
+      showWinToast(title, detail);
+    }catch(_){}
+try{ confettiBurst(); }catch(_){}
+    applause();
+
+    renderRankingV2();
+  }
+
+  // --- 6) Start game V2: giữ nguyên dữ liệu lớp/học sinh ---
+  function startGameV2(){
+    // yêu cầu chọn HS
+    if(!state.currentStudent){
+      alert("⚠️ Vui lòng chọn học sinh!");
+      return;
+    }
+    // chuẩn bị
+    stopTimer(); // tắt timer cũ nếu còn
+    stopTotalTimer();
+
+    state.total = Number(el.modeCount.value||10);
+    state.score = 0;
+    state.qIndex = 0;
+    state.inGame = true;
+
+    // kế hoạch đề (đang có createPlan / buildPlan cũ)
+    try{
+      state.plan = buildPlan(state.total, el.grade.value, el.term.value, el.level.value);
+    }catch(_){
+      // fallback: trộn đều 4 phép
+      state.plan = [];
+      const kinds = ["add","sub","mul","div"];
+      for(let i=0;i<state.total;i++) state.plan.push(kinds[i%kinds.length]);
+    }
+    state.questions = buildQuestions(state.total);
+    state.userAnswers = new Array(state.total).fill("");
+
+    setStatus(`${state.currentStudent} — đang làm bài`);
+    renderQuestionAt(0);
+    startTotalTimer();
+  }
+
+  // --- 7) Gắn lại nút Start dùng hàm mới + đảm bảo lớp/học sinh luôn nạp ---
+  function rebind(){
+    try{
+      const b = $("btnStart");
+      if(b) b.onclick = startGameV2;
+    }catch(_){}
+    // đảm bảo danh sách lớp & học sinh được nạp ngay từ đầu
+    try{
+      fillClassOptions();
+      renderStudents();
+      renderRankingV2();
+      setStatus("Chọn học sinh để bắt đầu");
+    }catch(_){}
+  }
+  // chạy sau khi trang sẵn sàng
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded", rebind);
+  else rebind();
+
+})();
+
+})();
+</script>
+
+<canvas id="confettiCanvas"></canvas>
+<div id="winToast">
+  <div class="big" id="winTitle">🎉 Chúc mừng!</div>
+  <div class="sub" id="winSub">Hoàn thành bài thi.</div>
+</div>
+
+</body>
+</html>
